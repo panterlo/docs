@@ -8,12 +8,12 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#3A606E",
-    "light": "#07C983",
-    "dark": "#3A606E",
+    "primary": "#46a5dd",
+    "light": "#46a5dd",
+    "dark": "#46a5dd",
     "anchors": {
-      "from": "#3A606E",
-      "to": "#07C983"
+      "from": "#46a5dd",
+      "to": "#46a5dd"
     }
   },
   "topbarLinks": [
@@ -42,7 +42,7 @@
   ],
   "anchors": [
     {
-      "name": "Corporate homepage",
+      "name": "Homepage",
       "icon": "house",
       "url": "https://tic.io"
     }

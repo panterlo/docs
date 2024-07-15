@@ -3,11 +3,11 @@ title: 'Search'
 description: 'Lightning fast and ultra modern search search-as-you-type, autocomplete-geo-search, LLM augmentation'
 ---
 
-TIC provides an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
-That means that all features described in [Typesense API](https://typesense.org/docs/26.0/api/) is available in TICs API.
+We provide an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
+That means that all features described in [Typesense API version 26](https://typesense.org/docs/26.0/api/) is available in our API.
 Data is continously reindexed as new data arrives.
 
-Search index is stored on RAM memory meaning requests to our search is so fast that you use it for search-as-you-type,
+Search index is stored on RAM memory meaning requests to our search serves very fast and you can use it for search-as-you-type,
 autocomplete and other applications.
 
 In companies search you can query (query_by) based on for example:
@@ -23,6 +23,8 @@ In companies search you can query (query_by) based on for example:
 - Bankaccounts
 - Addresses (Street, Postalcode, City, Country, Latitude/Longitude, Radius)
 
+The response is strongly typed and you will find the response model in the OpenAPI specification.
+
 <Card
   title='OpenAPI Schema'
   icon='link'
@@ -33,7 +35,7 @@ In companies search you can query (query_by) based on for example:
 
 ## Examples
 
-We have put togheter a few example of how you can use search for companies.
+We have put togheter a few example of how you can use search to efficient query the millions of companies we track.
 
 ### Search for companies at at specific street
 
@@ -58,6 +60,12 @@ key=your_api_key
 ```
 
 ### Search for a specific phone number in E164 format
+
+<Note>
+  What is E.164? E164 format is an international format for phone numbers. E.164
+  numbers are formatted [+] [country code] [subscriber number including area
+  code] and can have a maximum of fifteen digits.
+</Note>
 
 ```bash cURL
 curl https://api.tic.io/search/companies?
@@ -107,7 +115,7 @@ query_by=sniCodes.sni_2007Name
 
 ### Response model
 
-The search response for example when you search for our company would look like this.
+The search response for example when you search for our company would look like the example below for our company.
 
 <Note>
   The registrationDate is in Unix epoch seconds e.g the number of seconds that
