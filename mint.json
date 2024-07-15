@@ -1,51 +1,50 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "openapi": "https://api.tic.io/docs/v1/swagger.json",
+  "name": "TIC",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/dark-tic.svg",
+    "light": "/logo/light-tic.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
+    "primary": "#3A606E",
     "light": "#07C983",
-    "dark": "#0D9373",
+    "dark": "#3A606E",
     "anchors": {
-      "from": "#0D9373",
+      "from": "#3A606E",
       "to": "#07C983"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@tic.io"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://app.tic.io"
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Core API Reference",
+      "url": "api-core"
+    },
+    {
+      "name": "Industry API Reference",
+      "url": "api-industry"
+    },
+    {
+      "name": "IDP API Reference",
+      "url": "api-idp"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Corporate homepage",
+      "icon": "house",
+      "url": "https://tic.io"
     }
   ],
   "navigation": [
@@ -53,39 +52,144 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "authentication",
+        "generate-client",
+        "throttling",
+        "search"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Core Datasets",
+      "pages": ["datasets/companies", "datasets/persons"]
+    },
+    {
+      "group": "Industry Datasets",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "datasets/europeancommission",
+        "datasets/finansinspektionen",
+        "datasets/ica"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "API Core Documentation",
+      "pages": ["api-core/introduction", "api-core/search"]
+    },
+    {
+      "group": "Search",
       "pages": [
-        "api-reference/introduction"
+        "api-core/searchcompanies/search-companies",
+        "api-core/searchcompanies/search-companies-multi"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Companies",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-core/companies/summary",
+        "api-core/companies/ownerships",
+        "api-core/companies/bank-accounts",
+        "api-core/companies/sni-codes",
+        "api-core/companies/employee-contributions",
+        "api-core/companies/payrolls",
+        "api-core/companies/share-register",
+        "api-core/companies/hyperlinks",
+        "api-core/companies/names",
+        "api-core/companies/phonenumbers",
+        "api-core/companies/purposes",
+        "api-core/companies/email",
+        "api-core/companies/signatories",
+        "api-core/companies/public-documents",
+        "api-core/companies/share-capital",
+        "api-core/companies/trademarks",
+        "api-core/companies/registered-offices",
+        "api-core/companies/status",
+        "api-core/companies/domains",
+        "api-core/companies/annual-reports"
+      ]
+    },
+    {
+      "group": "Persons",
+      "pages": [
+        "api-core/persons/search",
+        "api-core/persons/details",
+        "api-core/persons/companies"
+      ]
+    },
+    {
+      "group": "Accounts",
+      "pages": [
+        "api-core/accounts/list",
+        "api-core/accounts/details",
+        "api-core/accounts/create",
+        "api-core/accounts/edit",
+        "api-core/accounts/delete"
+      ]
+    },
+    {
+      "group": "API IDP Documentation",
+      "pages": ["api-idp/introduction"]
+    },
+    {
+      "group": "Folders",
+      "pages": [
+        "api-idp/folders/list",
+        "api-idp/folders/details",
+        "api-idp/folders/create",
+        "api-idp/folders/edit",
+        "api-idp/folders/upload",
+        "api-idp/folders/documents",
+        "api-idp/folders/document"
+      ]
+    },
+    {
+      "group": "Documents",
+      "pages": [
+        "api-idp/documents/list",
+        "api-idp/documents/delete",
+        "api-idp/documents/download"
+      ]
+    },
+    {
+      "group": "API Industry Documentation",
+      "pages": ["api-industry/introduction"]
+    },
+    {
+      "group": "European Commission",
+      "pages": [
+        "api-industry/europeancommission/search-participants",
+        "api-industry/europeancommission/details-participant",
+        "api-industry/europeancommission/participant-projects",
+        "api-industry/europeancommission/search-projects",
+        "api-industry/europeancommission/project-members"
+      ]
+    },
+    {
+      "group": "Sweden - Finansinspektionen",
+      "pages": [
+        "api-industry/finansinspektionen/notifications",
+        "api-industry/finansinspektionen/notifications-extended",
+        "api-industry/finansinspektionen/insider-trading",
+        "api-industry/finansinspektionen/insider-trading-details",
+        "api-industry/finansinspektionen/insider-trading-summary"
+      ]
+    },
+    {
+      "group": "Sweden - ICA",
+      "pages": [
+        "api-industry/ica/list",
+        "api-industry/ica/details",
+        "api-industry/ica/notes",
+        "api-industry/ica/annual-reports",
+        "api-industry/ica/catalog",
+        "api-industry/icastatistics/store",
+        "api-industry/icastatistics/largest",
+        "api-industry/icastatistics/most-profitable",
+        "api-industry/icastatistics/extra-dividends",
+        "api-industry/icastatistics/winter-destinations"
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "github": "https://github.com/orgs/the-intelligence-company/",
+    "linkedin": "https://www.linkedin.com/company/tic-the-intelligence-company"
   }
 }

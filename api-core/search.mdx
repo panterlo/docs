@@ -1,0 +1,201 @@
+---
+title: 'Search'
+description: 'How to use our lightning-fast search'
+---
+
+TIC provides an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
+That means that all features described in [Typesense API](https://typesense.org/docs/26.0/api/) is available in TICs API.
+Data is continously reindexed as new data arrives.
+
+Search index is stored on RAM memory meaning requests to our search is so fast that you use it for search-as-you-type,
+autocomplete and other applications.
+
+In companies search you can query (query_by) based on for example:
+
+- Company Id (used across all API calls)
+- Country code (ISO 2 letters)
+- Registrationnumber (For local region)
+- Most recent purpose
+- Names (all historic and current names)
+- Phonenumbers
+- Email addresses
+- Hyperlinks
+- Bankaccounts
+- Addresses (Street, Postalcode, City, Country, Latitude/Longitude, Radius)
+
+<Card
+  title='OpenAPI Schema'
+  icon='link'
+  href='https://api.tic.io/docs/v1/swagger.json'
+>
+  Look for the model name TypesenseCompanyDocument in the schema definition.
+</Card>
+
+## Examples
+
+We have put togheter a few example of how you can use search for companies.
+
+### Search for companies at at specific street
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=Fabriksgatan&
+query_by=addresses.street&
+key=your_api_key
+{
+    {
+    "facet_counts": [],
+    "found": 1563,
+    "hits": [
+        {
+            "document": {
+                "id": "3427183",
+                "companyId": 3427183,
+                "iso3166CountryCode": "SE",
+                "registrationNumber": "5564228509",
+                "registrationDate": 669510000....
+}
+```
+
+### Search for a specific phone number in E164 format
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=+46850565800&
+query_by=phoneNumbers.e164PhoneNumber&
+key=your_api_key
+```
+
+### Search for companies within a certain geographic area
+
+Search for companies covering a 300 meters radius around the provided location by latitude and longitude in WGS84 format.
+Read more about geosearch [here](https://typesense.org/docs/26.0/api/geosearch.html).
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=*&
+query_by=addresses.street&
+filter_by=addresses.location:(57.6799,12.09162, 0.300 km)&
+sort_by=addresses.location(57.6799,12.09162):asc&
+key=your_api_key
+```
+
+### Filter for a specific companyId
+
+Filters allows you to narrow down your search. This example shows how to specically match only the company with id 3508351.
+Read more about filters [here](https://typesense.org/docs/26.0/api/search.html#filter-parameters).
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=*&
+query_by=registrationNumber&
+filter_by=companyId:[3508351]&
+key=your_api_key
+```
+
+### Search for companies with specific industry names or codes
+
+Searches for companies that have a number of specific industry codes as defined in [SNI 2007 standard](https://www.scb.se/en/documentation/classifications-and-standards/swedish-standard-industrial-classification-sni). You
+can search either for the name as described in the standard or the code itself.
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=Handel%20med%20personbilar%20och%20l%C3%A4tta%20motorfordon&
+query_by=sniCodes.sni_2007Name
+&key=your_api_key"
+```
+
+### Response model
+
+The search response for example when you search for our company would look like this.
+
+<Note>
+  The registrationDate is in Unix epoch seconds e.g the number of seconds that
+  have elapsed since January 1, 1970 (midnight UTC/GMT)
+</Note>
+
+```json Search response for companies
+{
+  "facet_counts": [],
+  "found": 1,
+  "hits": [
+    {
+      "document": {
+        "id": "3503318",
+        "companyId": 3503318,
+        "iso3166CountryCode": "SE",
+        "registrationNumber": "5594871682",
+        "registrationDate": 1718661600,
+        "mostRecentPurpose": "Bolaget har till föremål för sin verksamhet att bedriva kreditupplysningsverksamhet, att tillhandahålla tjänster och information för marknadsföring, att tillhandahålla annan affärsinformation samt att bedriva annan därmed förenlig verksamhet. Bolagets ska även utveckla, sälja och marknadsföra mjukvaror och andra tjänster inom området för datautvinning, maskininlärning, mönsterigenkänning samt därmed förenlig verksamhet.",
+        "names": [
+          {
+            "nameOrIdentifier": "The Intelligence Company AB (publ)",
+            "companyNamingType": "legalName",
+            "firstSeenAtUtc": "2024-06-18T12:01:24"
+          }
+        ],
+        "phoneNumbers": [],
+        "emailAddresses": [],
+        "hyperlinks": [],
+        "sniCodes": [],
+        "intelligence": [],
+        "status": [],
+        "mostRecentAnnualReportOverview": null,
+        "isRegisteredForVAT": true,
+        "isRegisteredForFTax": null,
+        "isRegisteredForPayroll": true,
+        "ftaxTerminationReason": null,
+        "bankAccounts": [
+          {
+            "bankAccountType": "bankgiro",
+            "accountNumber": "5786439",
+            "swifT_BIC": null
+          }
+        ],
+        "addresses": [
+          {
+            "addressType": "mailAddress",
+            "co": null,
+            "street": "Maluddsvägen",
+            "postalCode": "824 56",
+            "city": "Hudiksvall",
+            "countryCodeAlpha3": "SWE",
+            "location": [61.71508, 17.18252]
+          },
+          {
+            "addressType": "mailAddress",
+            "co": null,
+            "street": "Maluddsvägen",
+            "postalCode": "824 56",
+            "city": "Hudiksvall",
+            "countryCodeAlpha3": "SWE",
+            "location": [61.71508, 17.18252]
+          }
+        ]
+      },
+      "highlight": {},
+      "highlights": [],
+      "text_match": 1736172819517014137.0,
+      "text_match_info": {
+        "best_field_score": "3315704397824",
+        "best_field_weight": 15,
+        "fields_matched": 1,
+        "num_tokens_dropped": 0,
+        "score": "1736172819517014137",
+        "tokens_matched": 3,
+        "typo_prefix_score": 0
+      }
+    }
+  ],
+  "out_of": 990588,
+  "page": 1,
+  "request_params": {
+    "collection_name": "companies_20240602",
+    "first_q": "the intelligence company",
+    "per_page": 10,
+    "q": "the intelligence company"
+  },
+  "search_cutoff": false,
+  "search_time_ms": 0
+}
+```

@@ -1,0 +1,115 @@
+---
+title: 'Introduction'
+description: 'How to use the AI IDP intelligent document processing API'
+---
+
+Our AI based intelligent document processing API is used to process documents and extract
+meaningful data that you can use to create your own datasets. It's used by us to process
+both financial and annual reports that companies are submitting to registration authorities.
+
+Folders are used to group documents togheter that can be optionally linked to a company. Our API
+contains public folders that are accessible by all users and private folders that belongs
+to one or more users.
+
+All folders that you create is private.
+
+## Folders
+
+Use folders to group documents togheter. Each folder belongs to an account and could contain one or many
+files.
+
+Creating a folder is simple:
+
+## Supported formats
+
+Our IDP can process the following formats:
+
+- PDF
+- TIFF including multi-page TIFF
+- PNG
+
+We recommend minimum resolution of 300 dpi.
+
+## Preprocessing
+
+Our API will take care of preprocessing the documents and their images while maintaining the source resolution.
+
+Summary of supported processing events:
+
+- Rotate if needed
+- Deskew pages
+- Remove punch holes
+- Remove border lines
+- Adjust for page margins
+- Remove page artifacts (arises from scanners and smudges)
+- Enhance text
+
+## Documents
+
+You can list, delete, upload and download documents. Each document can be associated with a company. When you upload
+a document you can pick four different tranformations:
+
+<CardGroup cols={2}>
+  <Card title='transformToEntity' icon='file-excel'>
+    This will transform each page in the file to a set of understandable
+    structured entities in JSON format. Think like an Excel sheet. You will get
+    each data in columns and rows. It deals with the complexity around
+    borderless and bordered tables.
+  </Card>
+  <Card title='transformToSearchablePDF' icon='file-pdf'>
+    This will transform the source file to a searchable visually pleasing PDF
+    adhering to PDF version 1.4.
+  </Card>
+  <Card title='transformToOCR' icon='file-import'>
+    An hOCR result will be provided than be used to feed a search database that
+    contains the location of text boxes and the contents of the text box.
+  </Card>
+  <Card title='transformToMetadata' icon='book'>
+    An json file will be provided containing the orginal metadata of the file.
+  </Card>
+</CardGroup>
+
+## How to upload a file
+
+To upload a file you use a multipart form post as the following simple cURL shows:
+
+```bash cURL
+curl  \
+--request POST \
+--header "Content-Type: multipart/form-data" \
+--header "x-api-key:your_api_key" \
+--form DocumentTransformType=" \
+      transformToEntity, \
+      transformToSearchablePDF, \
+      transformToOCR" \
+--form DocumentType=annualReport \
+--form MimeType="application/pdf" \
+--form Description="Account Report 2022-03" \
+--form ExternalId1=123456 \
+--form CompanyId=2692467 \
+--form file="@2692467_202104_202203.pdf" \
+https://api.tic.io/folders/1/documents
+```
+
+You will receive the stored document id and the status of the transformation. Currentley you need to manually
+check back for the result. A webhook feature is planned to get the status posted back.
+
+```json Response
+{
+  "documentId": 1068,
+  "documentFolderId": 1,
+  "originsFromDocumentId": null,
+  "companyId": 2692467,
+  "externalId1": "123456",
+  "externalId2": null,
+  "description": "Account Report 2022-03",
+  "documentType": "annualReport",
+  "fileName": "2692467_202104_202203.pdf",
+  "fileMimeType": "application/pdf",
+  "documentTransformType": "transformToSearchablePDF, transformToOCR, transformToEntity",
+  "documentTransformStatusType": "requested",
+  "documentFileSystemType": "orginal",
+  "isDeleted": null,
+  "lastUpdatedAtUtc": "2024-07-15T10:29:52"
+}
+```

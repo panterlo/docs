@@ -1,0 +1,37 @@
+---
+title: 'Introduction'
+description: 'How to use our core datasets'
+---
+
+Our core datasets constitutes our core as a credit reference agency. We gather and process information
+continously every second. Industry datasets are combined with our core datasets to enrich data and offer
+much better tools for credit scoring, vendor and customer evaluation, prospecting and statistical data analysis.
+
+# Search
+
+TIC provides an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
+
+Check out examples and [documentation here](/api-core/search).
+
+## Accounts
+
+An account groups togheter companies and persons and could technically be called a list. Each account could
+contain one or multiple users having access to the account.
+
+Accounts are a great way to:
+
+- Group togheter vendors
+- Group togheter customers
+- Group togheter various lists of companies that you want to track
+
+Each account could reference one or multiple companies and/or persons. An account could also contain
+a webhook to post event changes to the companies and/or persons in the account.
+
+## Companies
+
+Each company contains a large number of current and historic records. Each stored in different entities and
+urls. When you search you will get an aggregate of certain records that are used for search purposes. but
+to get access to all historic records you need to access each endpoint.
+
+Changes in for example in a company purpose is recorded under
+https://api.tic.io/datasets/companies/{companyId}/purpose with details when it was changed.
