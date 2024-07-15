@@ -1,33 +1,54 @@
 ---
-title: 'Introduction 2'
-description: 'Example section for showcasing API endpoints'
+title: 'Introduction'
+description: 'How to use our industry datasets'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+Our industry datasets contains data from various sources that aggregated to simple to use
+API endpoints and can easily be combined with our core endpoints. They are used to gather
+information to enrich data and offer much better tools for credit scoring, vendor and
+customer evaluation, prospecting and statistical data analysis.
 
-## Welcome
+## Available datasets
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Most industry datasets contains a reference to CompanyId meaning you can easily source
+information from our core datasets.
 
-<Card
-  title='Plant Store Endpoints'
-  icon='leaf'
-  href='https://github.com/mintlify/starter/blob/main/api-reference/openapi.json'
->
-  View the OpenAPI specification file
-</Card>
+Current published datasets are:
 
-## Authentication
+- [European Commission](http://localhost:3000/datasets/europeancommission)
+- [Sweden Finansinspektionen](http://localhost:3000/datasets/finansinspektionen)
+- [ICA](/datasets/ica)
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+## Example
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Let's say you want to get annual reports for a specific grocery store first issue a
+request to:
+
+```bash cURL
+curl https://api.tic.io/datasets/se/ica/stores?key=your_api_key
 ```
+
+Note in the response yuou will get the companyId property.
+
+```json Response
+{
+
+  "pageSize": 10,
+  "lastItemId": 10,
+  "totalItems": 1283,
+  "items": [
+    {
+      "ica_StoreId": 1,
+      "companyId": 2692434,
+      "icaExternalStoreId": "01441",
+      "icaStoreOwnerId": 33420,
+}
+```
+
+Make a request to with the companyId: 2692434 to:
+
+```bash cURL
+curl https://api.tic.io/datasets/companies/2692434/annual-reports?key=your_api_key
+```
+
+And you will get all available annual reports for the business.
