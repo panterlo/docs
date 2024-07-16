@@ -38,6 +38,15 @@ Typical algorithms and filters used:
 - [Dilation(morphology)](<https://en.wikipedia.org/wiki/Dilation_(morphology)>)
 - [Hough transform](https://en.wikipedia.org/wiki/Hough_transform)
 
+## Extraction and OCR
+
+One of the techniques we use for extraction in images and documents is
+[agglomerative hierarchical clustering (AHC)](https://en.wikipedia.org/wiki/Hierarchical_clustering).
+The algorithm finds dissimilarities between data and outputs an hierarchical representation.
+
+Our OCR engine is based on Tesseract with a kind of recurrent neural network called long-short term memory (LSTM). We train
+our models continously based on the data we typically process.
+
 ## Example
 
 ### Step 1 - raw page

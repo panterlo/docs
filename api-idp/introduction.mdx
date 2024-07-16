@@ -4,7 +4,7 @@ description: 'How to use the AI IDP intelligent document processing API'
 ---
 
 Our AI based intelligent document processing API is used to process documents and extract
-meaningful data that you can use to create your own datasets. It's used by us to process
+meaningful data that you can use to create your own datasets. It's used by us also to process
 both financial and annual reports that companies are submitting to registration authorities.
 
 You can read about the technology we are using and [how it works here](/technology/ai-intelligent-document-processing).
@@ -13,11 +13,12 @@ Folders are used to group documents togheter that can be optionally linked to a 
 contains public folders that are accessible by all users and private folders that belongs
 to one or more users.
 
-All folders that you create is private.
+All folders that you create is private and cannot be reached by "everyone". But you can still share
+folders inside your team by giving them access to the account that has ownership of the folder.
 
 ## Folders
 
-Use folders to group documents togheter. Each folder belongs to an account and could contain one or many
+Use folders to group documents togheter. Each folder belongs to an account (owner) and could contain one or many
 files.
 
 ## Supported formats
@@ -32,10 +33,14 @@ We recommend minimum resolution of 300 dpi.
 
 ## Preprocessing
 
-Our API will take care of preprocessing the documents and their images while maintaining the source resolution.
+Our API will take care of preprocessing the documents and their images while maintaining the source resolution. PDF
+files containing images will be extracted maintaining their orginal format and compression. If the source file
+contain 95% or more grayscale pixels the destination file will always be created in grayscale.
 
-Summary of supported processing events:
+Summary of processing events:
 
+- Extract images
+- Remove metadata
 - Rotate if needed
 - Deskew pages
 - Remove punch holes
@@ -47,7 +52,7 @@ Summary of supported processing events:
 ## Documents
 
 You can list, delete, upload and download documents. Each document can be associated with a company. When you upload
-a document you can pick four different tranformations:
+a document you can pick four different tranformations.
 
 <CardGroup cols={2}>
   <Card title='transformToEntity' icon='file-excel'>
@@ -58,16 +63,24 @@ a document you can pick four different tranformations:
   </Card>
   <Card title='transformToSearchablePDF' icon='file-pdf'>
     This will transform the source file to a searchable visually pleasing PDF
-    adhering to PDF version 1.4.
+    adhering to PDF version 1.4 and linearized.
   </Card>
   <Card title='transformToOCR' icon='file-import'>
-    An hOCR result will be provided than be used to feed a search database that
-    contains the location of text boxes and the contents of the text box.
+    An hOCR result will be provided than can be used to feed a search database
+    that contains the location of text boxes and the contents of the text box.
+    Also a full string representing the content of the page is included.
   </Card>
   <Card title='transformToMetadata' icon='book'>
     An json file will be provided containing the orginal metadata of the file.
+    It will for example contain format and resolution of images in PDF files.
   </Card>
 </CardGroup>
+
+## Searchable PDF
+
+When you upload a PDF or when a PDF is created from images all metadata will be removed when a new searchable
+PDF is created. The new PDF will be [linearized](https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/linearize-pdf/)
+which means they are optimized to be viewed on mobil and desktop apps by enabling the viewer to incrementally download the pages.
 
 ## How to upload a file
 
