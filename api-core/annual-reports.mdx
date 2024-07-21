@@ -1,0 +1,43 @@
+---
+title: 'Annual Reports'
+description: 'How to use the simple API to display and use financial data and metrics.'
+---
+
+Our API endpoint for financial and annual reports has been built to simplify for any
+developer working with either charts or sheet like data. The annual reports contains
+the result- and balancesheet, key metrics, footnotes and any additional information.
+
+## Schema description
+
+Each record contains an order which means which row you should display the data at, think
+like an Excel sheet. The localized field name contains a description in the given language.
+The display format can be used to simplify the presentation by using the format for almost any
+given number and formatting library.
+
+Notes and highlight are specifically if you want to highlight data with color and
+a note describing something. If something needs highlighting our API will
+output it so it's easy for you to use.
+
+```json Schema for a record
+{
+  "order": 123,
+  "localizedFieldName": "<string>",
+  "enFieldName": "<string>",
+  "displayFormat": "<string>",
+  "type": "<string>",
+  "value": "<any>",
+  "notes": "<string>",
+  "highlight": "green"
+}
+```
+
+## Example request
+
+```bash cURL
+curl https://api.tic.io/datasets/companies/1893055/annual-reports?key=your_api_key
+```
+
+## Example Handsontable
+
+[Handsontable](https://handsontable.com/) is a popular data grid and spreadsheet UI for developers.
+It can be used for React, Angular, Vue and plain JavaScript.

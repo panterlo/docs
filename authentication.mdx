@@ -29,7 +29,7 @@ This is the most used way of authenticating especially if you are building inter
 In the request header add the key x-api-key=your_api_key and that’s all.
 
 ```bash cURL
-> curl -H "x-api-key:your_api_key" https://api.tic.io/search/companies?q=57864
+curl -H "x-api-key:your_api_key" https://api.tic.io/search/companies?q=57864
 39&query_by=bankAccounts.accountNumber
 ```
 
@@ -53,7 +53,7 @@ flowchart LR
 Issue a HTTP POST to login-otp with the user e164PhoneNumber or emailAddresses.
 
 ```bash cURL
-> curl https://api.tic.io/ask_for_approval/login-otp
+curl https://api.tic.io/ask_for_approval/login-otp
 -d '{
     "e164MobilePhoneNumber": "+461234567",
     "email": "user-email@domain.tld"
@@ -76,7 +76,7 @@ A one-time password will be sent to the mobile phone number valid only for a sho
 Issue a HTTP POST to login-otp-validate with the userguid and one-time password.
 
 ```bash cURL
-> curl https://api.tic.io/ask_for_approval/login-otp-validate
+curl https://api.tic.io/ask_for_approval/login-otp-validate
 -d '{
     "userGuid": "DAE48E21-E457-44AB-8DB1-8859E3424179",
     "validationCode": "<received by the user>"
