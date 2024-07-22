@@ -1,0 +1,78 @@
+---
+title: Domain and Social Media Monitoring
+description: 'How we use domain and social media monitoring to provide rich data about companies'
+---
+
+As a credit reference agency we belive rich trusted data is important to make the right decisions
+and can also be used to detect anomalies and increase sales by delivering better prospecting tools.
+We continously monitor domains belonging to a business, their subdomains, issued certificates,
+DNS records and actual content on the pages including usage of payment methods and other services.
+
+## Domains
+
+We have a distributed large network of crawlers that monitors both zone files for selected domains
+and [certificate transparency](https://en.wikipedia.org/wiki/Certificate_Transparency) entries. Certificate
+transparency logs contains issued certificates and allows us to detect some of the used subdomains and
+other important metrics.
+
+## Certificate Logs
+
+Certificate transparency logs contains the entries for issued certificate which reveals information about
+subdomains. It can also reveal which companies are using services which can be used for anomaly analysis
+and prospecting.
+
+```json Example Certificate Log Entries
+[
+  {
+    "issuer_ca_id": 183267,
+    "issuer_name": "C=US, O=Let's Encrypt, CN=R3",
+    "common_name": "aimn.eng.kb.kundo.se",
+    "name_value": "aimn.eng.kb.kundo.se",
+    "id": 4621048740,
+    "entry_timestamp": "2021-05-31T09:49:11.019",
+    "not_before": "2021-05-31T08:49:10",
+    "not_after": "2021-08-29T08:49:10",
+    "serial_number": "03960b69bbef9f16051fc886795165302746",
+    "result_count": 1
+  },
+  {
+    "issuer_ca_id": 183267,
+    "issuer_name": "C=US, O=Let's Encrypt, CN=R3",
+    "common_name": "k2a.kb.kundo.se",
+    "name_value": "k2a.kb.kundo.se",
+    "id": 4616950227,
+    "entry_timestamp": "2021-05-30T16:12:00.294",
+    "not_before": "2021-05-30T15:12:00",
+    "not_after": "2021-08-28T15:12:00",
+    "serial_number": "04fe8b238d0ab13e6f63e67e40949ca528af",
+    "result_count": 2
+  }
+]
+```
+
+## DNS records
+
+We monitor DNS records and their changes daily and make it simple to consume anomalies in modifications
+such as try to hide the destination IP-address by proxying calls.
+
+## HTML content
+
+In compairsion to traditional web crawling technology that visits web pages periodically and crawls content and links
+we use a distributed network of headless browsers to simulate real users and allows crawling HTML generated
+by front-end frameworks such as React, Vue, Svelte, Angular and many more. We also automatically detect
+front-end APIs and tech stack. Last we also detect usage of Stripe tokens and other payment
+gateways.
+
+It's similar to [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) which is an archive of homepages
+found on the internet but our method is tailored for anomaly analysis.
+
+## Social media
+
+We continously search for social media accounts and pages linked to companies such as Facebook, LinkedIn, X,
+Instagram and many more. We look for example at number of posts, last date of post, reviews which is
+bundled into anomaly metrics for businesses.
+
+## Payment gateways
+
+HTML pages leaves tracks of usage of payment gateways which is used to determine how they are used across
+multiple pages.
