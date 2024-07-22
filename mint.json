@@ -16,6 +16,12 @@
       "to": "#46a5dd"
     }
   },
+  "seo": {
+    "indexHiddenPages": true
+  },
+  "integrations": {
+    "frontchat": "ef623a35403bae1d87e87dda7eb41d02"
+  },
   "topbarLinks": [
     {
       "name": "Support",
@@ -51,19 +57,14 @@
     {
       "group": "Technology",
       "pages": [
+        "technology/introduction",
         "technology/ai-anomaly-detection",
         "technology/ai-intelligent-document-processing"
       ]
     },
     {
       "group": "Get Started",
-      "pages": [
-        "introduction",
-        "authentication",
-        "generate-client",
-        "throttling",
-        "search"
-      ]
+      "pages": ["authentication", "generate-client", "throttling", "search"]
     },
     {
       "group": "Core Datasets",
