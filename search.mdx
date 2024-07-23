@@ -1,6 +1,6 @@
 ---
 title: 'Search'
-description: 'Lightning fast and ultra modern search search-as-you-type, autocomplete-geo-search, LLM augmentation'
+description: 'Lightning fast and ultra modern search search-as-you-type, autocomplete, geo-search, LLM augmentation'
 ---
 
 We provide an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
@@ -125,38 +125,97 @@ The search response for example when you search for our company would look like 
 ```json Search response for companies
 {
   "facet_counts": [],
-  "found": 1,
+  "found": 3,
   "hits": [
     {
       "document": {
-        "id": "3503318",
-        "companyId": 3503318,
+        "id": "1893055",
+        "companyId": 1893055,
         "iso3166CountryCode": "SE",
-        "registrationNumber": "5594871682",
-        "registrationDate": 1718661600,
-        "mostRecentPurpose": "Bolaget har till föremål för sin verksamhet att bedriva kreditupplysningsverksamhet, att tillhandahålla tjänster och information för marknadsföring, att tillhandahålla annan affärsinformation samt att bedriva annan därmed förenlig verksamhet. Bolagets ska även utveckla, sälja och marknadsföra mjukvaror och andra tjänster inom området för datautvinning, maskininlärning, mönsterigenkänning samt därmed förenlig verksamhet.",
+        "registrationNumber": "5565199493",
+        "registrationDate": 805672800,
+        "mostRecentPurpose": "Aktiebolaget ska bedriva försäljning av mjukvaror, hårdvaror samt tjänster inom datakommunikation, produktion och försäljning av mediaprodukter och mediatjänster samt därmed förenlig verksamhet.",
         "names": [
           {
-            "nameOrIdentifier": "The Intelligence Company AB (publ)",
+            "nameOrIdentifier": "Bahnhof AB (publ)",
             "companyNamingType": "legalName",
-            "firstSeenAtUtc": "2024-06-18T12:01:24"
+            "firstSeenAtUtc": "2023-11-20T18:47:12"
           }
         ],
-        "phoneNumbers": [],
+        "phoneNumbers": [
+          {
+            "e164PhoneNumber": "+46105100000",
+            "phoneNumberType": "fixedLine"
+          }
+        ],
         "emailAddresses": [],
-        "hyperlinks": [],
-        "sniCodes": [],
+        "hyperlinks": [
+          {
+            "hyperlink": "https://bahnhof.se/",
+            "hyperlinkType": "homepage"
+          },
+          {
+            "hyperlink": "https://se.linkedin.com/company/bahnhof",
+            "hyperlinkType": "linkedIn"
+          }
+        ],
+        "sniCodes": [
+          {
+            "sni_2007Code": "61100",
+            "sni_2007Name": "Trådbunden telekommunikation"
+          },
+          {
+            "sni_2007Code": "63110",
+            "sni_2007Name": "Databehandling, hosting o.d."
+          },
+          {
+            "sni_2007Code": "69201",
+            "sni_2007Name": "Redovisning och bokföring"
+          }
+        ],
         "intelligence": [],
         "status": [],
-        "mostRecentAnnualReportOverview": null,
+        "mostRecentAnnualReportOverview": {
+          "annualReportPeriod": 202212,
+          "netSales": 1730020,
+          "operatingProfit": 216943,
+          "profitForTheYear": 141305,
+          "grossMargin": 28.93,
+          "operatingMargin": 12.54,
+          "netProfitMargin": 12.64,
+          "equityAssetsRatio": 49.46,
+          "quickRatio": 143.33,
+          "netSalesChange": 7.87,
+          "numberOfEmployees": 290
+        },
         "isRegisteredForVAT": true,
-        "isRegisteredForFTax": null,
+        "isRegisteredForFTax": true,
         "isRegisteredForPayroll": true,
         "ftaxTerminationReason": null,
         "bankAccounts": [
           {
             "bankAccountType": "bankgiro",
-            "accountNumber": "5786439",
+            "accountNumber": "1746635",
+            "swifT_BIC": null
+          },
+          {
+            "bankAccountType": "bankgiro",
+            "accountNumber": "51365088",
+            "swifT_BIC": null
+          },
+          {
+            "bankAccountType": "bankgiro",
+            "accountNumber": "56117526",
+            "swifT_BIC": null
+          },
+          {
+            "bankAccountType": "bankgiro",
+            "accountNumber": "59219212",
+            "swifT_BIC": null
+          },
+          {
+            "bankAccountType": "bankgiro",
+            "accountNumber": "7859291",
             "swifT_BIC": null
           }
         ],
@@ -164,46 +223,68 @@ The search response for example when you search for our company would look like 
           {
             "addressType": "mailAddress",
             "co": null,
-            "street": "Maluddsvägen",
-            "postalCode": "824 56",
-            "city": "Hudiksvall",
+            "street": "Sveavägen",
+            "postalCode": "111 34",
+            "city": "Stockholm",
             "countryCodeAlpha3": "SWE",
-            "location": [61.71508, 17.18252]
+            "location": [59.33876, 18.06013]
           },
           {
             "addressType": "mailAddress",
             "co": null,
-            "street": "Maluddsvägen",
-            "postalCode": "824 56",
-            "city": "Hudiksvall",
-            "countryCodeAlpha3": "SWE",
-            "location": [61.71508, 17.18252]
+            "street": "Box 930",
+            "postalCode": "78129",
+            "city": "BORLÄNGE",
+            "countryCodeAlpha3": null,
+            "location": null
+          }
+        ],
+        "documents": [
+          {
+            "companyDocumentId": 8894712,
+            "companyDocumentType": null,
+            "documentDate": "2024-05-16T00:00:00",
+            "documentTitle": "Bemyndigande om ökning av aktiekapitalet genom nyemission",
+            "documentVersion": "2024/267251",
+            "documentValue1": null,
+            "documentValue2": "NEW",
+            "documentValue3": null
+          },
+          {
+            "companyDocumentId": 8894711,
+            "companyDocumentType": null,
+            "documentDate": "2024-05-14T00:00:00",
+            "documentTitle": "Ändring av företrädare/firmateckning",
+            "documentVersion": "2024/263117",
+            "documentValue1": null,
+            "documentValue2": "NEW",
+            "documentValue3": null
           }
         ]
       },
       "highlight": {},
       "highlights": [],
-      "text_match": 1736172819517014137.0,
+      "text_match": 1157451471441100900.0,
       "text_match_info": {
-        "best_field_score": "3315704397824",
+        "best_field_score": "2211897868288",
         "best_field_weight": 15,
         "fields_matched": 1,
         "num_tokens_dropped": 0,
-        "score": "1736172819517014137",
-        "tokens_matched": 3,
+        "score": "1157451471441100921",
+        "tokens_matched": 2,
         "typo_prefix_score": 0
       }
     }
   ],
-  "out_of": 990588,
+  "out_of": 1006383,
   "page": 1,
   "request_params": {
     "collection_name": "companies_20240602",
-    "first_q": "the intelligence company",
+    "first_q": "bahnhof ab",
     "per_page": 10,
-    "q": "the intelligence company"
+    "q": "bahnhof ab"
   },
   "search_cutoff": false,
-  "search_time_ms": 0
+  "search_time_ms": 2
 }
 ```
