@@ -22,6 +22,8 @@ In companies search you can query (query_by) based on for example:
 - Hyperlinks
 - Bankaccounts
 - Addresses (Street, Postalcode, City, Country, Latitude/Longitude, Radius)
+- Stock ISIN,Ticker,YahooSymbol,MarketName,MarketExchangeName,MarketCountryCodeAlpha3,SectorName,BranchName)
+- LEI (LEICode,RegistrationStatus,InitialRegistrationDate,NextRenewalDate,ManagingLOU,ManagingLOULegalName)
 
 <Card
   title='OpenAPI Schema'
@@ -188,27 +190,27 @@ The search response for example when you search for our company would look like 
           {
             "bankAccountType": "bankgiro",
             "accountNumber": "1746635",
-            "swifT_BIC": null
+            "swift_BIC": null
           },
           {
             "bankAccountType": "bankgiro",
             "accountNumber": "51365088",
-            "swifT_BIC": null
+            "swift_BIC": null
           },
           {
             "bankAccountType": "bankgiro",
             "accountNumber": "56117526",
-            "swifT_BIC": null
+            "swift_BIC": null
           },
           {
             "bankAccountType": "bankgiro",
             "accountNumber": "59219212",
-            "swifT_BIC": null
+            "swift_BIC": null
           },
           {
             "bankAccountType": "bankgiro",
             "accountNumber": "7859291",
-            "swifT_BIC": null
+            "swift_BIC": null
           }
         ],
         "addresses": [
@@ -255,6 +257,29 @@ The search response for example when you search for our company would look like 
             "comments": "{\"Status\":\"NEW\"}"
           }
         ]
+      },
+      "lei": {
+        "initialRegistrationDate": 1477533600,
+        "leiCode": "213800K7LQU3H85KCU96",
+        "managingLOU": "549300O897ZC5H7CY412",
+        "managingLOULegalName": "Nordic Legal Entity Identifier AB",
+        "nextRenewalDate": 1745795880,
+        "registrationStatus": "ISSUED"
+      },
+      "stock": {
+        "branchName": "Bredband & Telefoni",
+        "enterpriseValue": 4970.71,
+        "enterpriseValueUpdated": 1722058247,
+        "isin": "SE0010442418",
+        "listingDate": 1198022400,
+        "marketCountryCodeAlpha3": "SWE",
+        "marketExchangeName": "OMX Stockholm",
+        "marketName": "First North",
+        "sectorName": "Telekommunikation",
+        "stockQuote": 51.9,
+        "stockQuoteUpdated": 1722058204,
+        "ticker": "BAHN B",
+        "yahooSymbol": "BAHN-B.ST"
       },
       "highlight": {},
       "highlights": [],
