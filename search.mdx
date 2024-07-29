@@ -111,8 +111,47 @@ can search either for the name as described in the standard or the code itself.
 ```bash cURL
 curl https://api.tic.io/search/companies?
 q=Handel%20med%20personbilar%20och%20l%C3%A4tta%20motorfordon&
-query_by=sniCodes.sni_2007Name
-&key=your_api_key"
+query_by=sniCodes.sni_2007Name&
+key=your_api_key"
+```
+
+### Search for stock listed companies
+
+Searches for companies listed on market exchange namne, OMX Stockholm,
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=OMX+Stockholm&
+query_by=stock.marketExchangeName&
+key=your_api_key
+```
+
+### Multi search
+
+Multi search enables you to carry out multi searches in one request by posting a json model to the search endpoint. Typesense have a description of the feature in their [documentation](https://typesense.org/docs/26.0/api/federated-multi-search.html9).
+
+Here is an example of how to use multisearch:
+
+```bash cURL
+curl  \
+--request POST
+--header "Content-Type: application/json"
+--header "x-api-key:your_api_key"
+--data '{
+  "searches": [
+    {
+      "collection": "companies",
+      "query_by": "registrationNumber",
+      "q": "5565199493"
+    },
+    {
+      "collection": "companies",
+      "query_by": "stock.ticker",
+      "q": "SBB"
+    }
+  ]
+}'
+https://api.tic.io/search/companies
 ```
 
 ### Response model
@@ -121,7 +160,9 @@ The search response for example when you search for our company would look like 
 
 <Note>
   The registrationDate is in Unix epoch seconds e.g the number of seconds that
-  have elapsed since January 1, 1970 (midnight UTC/GMT)
+  have elapsed since January 1, 1970 (midnight UTC/GMT). Same applies for
+  various dates since Typesense requries dates to be serialized to epoch. For
+  example listingDate (stock) and nextRenewalDate (lei) are both epoch.
 </Note>
 
 ```json Search response for companies
