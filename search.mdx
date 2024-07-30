@@ -40,8 +40,8 @@ The response is strongly typed and you will find the response model in the OpenA
 
 ## Fields indexed
 
-The following fields are currentley indexed in memory. These can be used in the query*by parameter. Rememeber that you can still
-limit your search result by using filter_by on \_ALL* fields.
+The following fields are currentley indexed in memory. These can be used in the query_by parameter. Rememeber that you can still
+limit your search result by using filter_by on ALL fields.
 
 | Field                              | Type     | Description                                                                      |
 | ---------------------------------- | -------- | -------------------------------------------------------------------------------- |
@@ -83,6 +83,11 @@ limit your search result by using filter_by on \_ALL* fields.
 | lei.nextRenewalDate                | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
 | lei.managingLOU                    | String   | LEI of the managing LOU                                                          |
 | lei.managingLOULegalName           | String   | Legal name of the LOU                                                            |
+
+## A word about dates, unix epoch and YYYY-MM-DDTHH:mm:ss
+
+Typesense allows only unix dates to be indexed so when you see a unix epoch timestamp it means it's an indexed field. All other
+dates are returned in YYYY-MM-DDTHH:mm:ss format.
 
 ## Examples
 
