@@ -10,7 +10,10 @@ Data is continously reindexed as new data arrives.
 Search index is stored on RAM memory meaning requests to our search serves very fast and you can use it for search-as-you-type,
 autocomplete and other applications.
 
-In companies search you can query (query_by) based on for example:
+In companies search you can query (query_by) based on 37 fields listed in the next chapter. You can also filter on
+more than 60 additional fields.
+
+Examples on what you can query on:
 
 - Company Id (used across all API calls)
 - Country code (ISO 2 letters)
@@ -21,9 +24,9 @@ In companies search you can query (query_by) based on for example:
 - Email addresses
 - Hyperlinks
 - Bankaccounts
-- Addresses (Street, Postalcode, City, Country, Latitude/Longitude, Radius)
-- Stock ISIN,Ticker,YahooSymbol,MarketName,MarketExchangeName,MarketCountryCodeAlpha3,SectorName,BranchName)
-- LEI (LEICode,RegistrationStatus,InitialRegistrationDate,NextRenewalDate,ManagingLOU,ManagingLOULegalName)
+- Addresses
+- Stock
+- LEI
 
 The response is strongly typed and you will find the response model in the OpenAPI specification.
 
@@ -34,6 +37,52 @@ The response is strongly typed and you will find the response model in the OpenA
 >
   Look for the model name TypesenseCompanyDocument in the schema definition.
 </Card>
+
+## Fields indexed
+
+The following fields are currentley indexed in memory. These can be used in the query*by parameter. Rememeber that you can still
+limit your search result by using filter_by on \_ALL* fields.
+
+| Field                              | Type     | Description                                                                      |
+| ---------------------------------- | -------- | -------------------------------------------------------------------------------- |
+| companyId                          | Int32    | Our global internal company identifier                                           |
+| registrationNumber                 | String   | The local registration number in the country                                     |
+| legalEntityType                    | String   | Type of legal entity as described in local market                                |
+| registrationDate (unix epoch)      | Int64    | Unix time (epoch) seconds since 1st January 1970                                 |
+| mostRecentPurpose                  | String   | The last purpose registered for the business                                     |
+| names.nameOrIdentifier             | String   | Current and former names of the business or                                      |
+| phoneNumbers.e164PhoneNumber       | String   | E164 formatted phone number                                                      |
+| phoneNumbers.numberPlanServiceType | String   | Service type as described in local number plan                                   |
+| phoneNumbers.orginalOperator       | String   | The orginal operator that held the number                                        |
+| phoneNumbers.priorOperator         | String   | Last prior operator before the porting                                           |
+| phoneNumbers.currentOperator       | String   | Current operator                                                                 |
+| phoneNumbers.lastPortingDate       | Int64    | Last porting date in Unix time (epoch) seconds since 1st January 1970            |
+| emailAddresses.emailAddress        | String   | E-mail addresses to the business                                                 |
+| hyperlinks.hyperlink               | String   | Hyperlinks to the business                                                       |
+| sniCodes.sni_2007Name              | String   | SNI 2007 name                                                                    |
+| bankAccounts.accountNumber         | String   | Bank accounts                                                                    |
+| addresses.co                       | String   | C/O = care of address                                                            |
+| addresses.street                   | String   | Street name                                                                      |
+| addresses.city                     | String   | City                                                                             |
+| addresses.postalCode               | String   | Postal Code                                                                      |
+| addresses.location                 | GeoPoint | Allows geosearch                                                                 |
+| addresses.addressType              | Int32    | 0 = mailAddress, 1 = visitingAddress, 2 = bothMailAndVisitingAddress             |
+| addresses.countryCodeAlpha3        | String   | Country code 3 char alpha                                                        |
+| documents.documentTitle            | String   | Title of the document                                                            |
+| documents.documentVersion          | String   | Version of the document                                                          |
+| stock.isin                         | String   | ISIN                                                                             |
+| stock.ticker                       | String   | Ticker symbol on market                                                          |
+| stock.marketName                   | String   | Market name                                                                      |
+| stock.marketExchangeName           | String   | Market exchange name                                                             |
+| stock.sectorName                   | String   | Business sector as provided on market                                            |
+| stock.branchName                   | String   | Business branch as provided on market                                            |
+| stock.enterpriseValue              | String   | Enterprise value last closing day                                                |
+| lei.leiCode                        | String   | LEI Code                                                                         |
+| lei.registrationStatus             | String   | RETIRED, DUPLICATE, LAPSED, ANNULLED, PENDING_TRANSFER, ISSUED, PENDING_ARCHIVAL |
+| lei.initialRegistrationDate        | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
+| lei.nextRenewalDate                | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
+| lei.managingLOU                    | String   | LEI of the managing LOU                                                          |
+| lei.managingLOULegalName           | String   | Legal name of the LOU                                                            |
 
 ## Examples
 
@@ -178,68 +227,66 @@ The search response for example when you search for our company would look like 
 ```json Search response for companies
 {
   "facet_counts": [],
-  "found": 3,
+  "found": 1,
   "hits": [
     {
       "document": {
-        "id": "1893055",
-        "companyId": 1893055,
+        "id": "2816023",
+        "companyId": 2816023,
         "iso3166CountryCode": "SE",
-        "registrationNumber": "5565199493",
-        "registrationDate": 805672800,
-        "mostRecentPurpose": "Aktiebolaget ska bedriva försäljning av mjukvaror, hårdvaror samt tjänster inom datakommunikation, produktion och försäljning av mediaprodukter och mediatjänster samt därmed förenlig verksamhet.",
+        "registrationNumber": "5565757423",
+        "legalEntityType": "Aktiebolag",
+        "registrationDate": 937260000,
+        "mostRecentPurpose": "Bolaget skall arbeta med konsulting, utveckling, implementering och försäljning av produkter, tjänster och mjukvaror inom områdena internet, extranet, e-commerce, management, marknadsföring och företagsprocesser, ävensom idka därmed förenlig verksamhet.",
         "names": [
           {
-            "nameOrIdentifier": "Bahnhof AB (publ)",
+            "nameOrIdentifier": "Tradedoubler Aktiebolag",
             "companyNamingType": "legalName",
-            "firstSeenAtUtc": "2023-11-20T18:47:12"
+            "firstSeenAtUtc": "2023-08-11T00:00:00"
           }
         ],
         "phoneNumbers": [
           {
-            "e164PhoneNumber": "+46105100000",
-            "phoneNumberType": "fixedLine"
+            "e164PhoneNumber": "+4684050800",
+            "phoneNumberType": "fixedLine",
+            "numberPlanServiceType": "Fasta telefonitjänster 08,031,040",
+            "orginalOperator": "Telia Sverige AB",
+            "priorOperator": "Telia Sverige AB",
+            "currentOperator": "GTT Communications Sweden AB",
+            "lastPortingDate": 1383177600
           }
         ],
         "emailAddresses": [],
         "hyperlinks": [
           {
-            "hyperlink": "https://bahnhof.se/",
-            "hyperlinkType": "homepage"
+            "hyperlink": "https://se.linkedin.com/company/tradedoubler",
+            "hyperlinkType": "linkedIn"
           },
           {
-            "hyperlink": "https://se.linkedin.com/company/bahnhof",
-            "hyperlinkType": "linkedIn"
+            "hyperlink": "https://www.tradedoubler.com/sv/releases/forandrat-antal-aktier-och-roster-i-tradedoubler-aktiebolag/",
+            "hyperlinkType": "homepage"
           }
         ],
         "sniCodes": [
           {
-            "sni_2007Code": "61100",
-            "sni_2007Name": "Trådbunden telekommunikation"
-          },
-          {
-            "sni_2007Code": "63110",
-            "sni_2007Name": "Databehandling, hosting o.d."
-          },
-          {
-            "sni_2007Code": "69201",
-            "sni_2007Name": "Redovisning och bokföring"
+            "sni_2007Code": "58290",
+            "sni_2007Name": "Utgivning av annan programvara"
           }
         ],
         "intelligence": [],
         "status": [],
         "mostRecentAnnualReportOverview": {
           "annualReportPeriod": 202212,
-          "netSales": 1730020,
-          "operatingProfit": 216943,
-          "profitForTheYear": 141305,
-          "grossMargin": 28.93,
-          "operatingMargin": 12.54,
-          "netProfitMargin": 12.64,
-          "equityAssetsRatio": 49.46,
-          "quickRatio": 143.33,
-          "netSalesChange": 7.87,
-          "numberOfEmployees": 290
+          "netSales": 134814,
+          "operatingProfit": 12128,
+          "profitForTheYear": 5492,
+          "grossMargin": 79.83,
+          "operatingMargin": 9.0,
+          "netProfitMargin": 4.09,
+          "equityAssetsRatio": 20.02,
+          "quickRatio": 77.93,
+          "netSalesChange": 26.6,
+          "numberOfEmployees": 38
         },
         "isRegisteredForVAT": true,
         "isRegisteredForFTax": true,
@@ -248,27 +295,7 @@ The search response for example when you search for our company would look like 
         "bankAccounts": [
           {
             "bankAccountType": "bankgiro",
-            "accountNumber": "1746635",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "51365088",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "56117526",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "59219212",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "7859291",
+            "accountNumber": "52834553",
             "swift_BIC": null
           }
         ],
@@ -276,93 +303,74 @@ The search response for example when you search for our company would look like 
           {
             "addressType": "mailAddress",
             "co": null,
-            "street": "Sveavägen",
-            "postalCode": "111 34",
+            "street": "Centralplan",
+            "houseNumber": "15",
+            "postalCode": "11120",
             "city": "Stockholm",
             "countryCodeAlpha3": "SWE",
-            "location": [59.33876, 18.06013]
-          },
-          {
-            "addressType": "mailAddress",
-            "co": null,
-            "street": "Box 930",
-            "postalCode": "78129",
-            "city": "BORLÄNGE",
-            "countryCodeAlpha3": null,
-            "location": null
+            "location": [59.33039, 18.05874]
           }
         ],
         "documents": [
           {
-            "companyDocumentId": 8894712,
+            "companyDocumentId": 8846176,
             "companyDocumentType": null,
-            "documentDate": "2024-05-16T00:00:00",
-            "documentTitle": "Bemyndigande om ökning av aktiekapitalet genom nyemission",
-            "documentVersion": "2024/267251",
+            "documentDate": "2023-08-11T00:00:00",
+            "documentTitle": "Årsredovisning",
+            "documentVersion": null,
             "documentValue1": null,
-            "documentValue2": "NEW",
+            "documentValue2": null,
             "documentValue3": null,
-            "comments": "{\"Status\":\"NEW\"}"
-          },
-          {
-            "companyDocumentId": 8894711,
-            "companyDocumentType": null,
-            "documentDate": "2024-05-14T00:00:00",
-            "documentTitle": "Ändring av företrädare/firmateckning",
-            "documentVersion": "2024/263117",
-            "documentValue1": null,
-            "documentValue2": "NEW",
-            "documentValue3": null,
-            "comments": "{\"Status\":\"NEW\"}"
+            "comments": "{\"Godkänd datum\":\"20230811\"}"
           }
-        ]
-      },
-      "lei": {
-        "initialRegistrationDate": 1477533600,
-        "leiCode": "213800K7LQU3H85KCU96",
-        "managingLOU": "549300O897ZC5H7CY412",
-        "managingLOULegalName": "Nordic Legal Entity Identifier AB",
-        "nextRenewalDate": 1745795880,
-        "registrationStatus": "ISSUED"
-      },
-      "stock": {
-        "branchName": "Bredband & Telefoni",
-        "enterpriseValue": 4970.71,
-        "enterpriseValueUpdated": 1722058247,
-        "isin": "SE0010442418",
-        "listingDate": 1198022400,
-        "marketCountryCodeAlpha3": "SWE",
-        "marketExchangeName": "OMX Stockholm",
-        "marketName": "First North",
-        "sectorName": "Telekommunikation",
-        "stockQuote": 51.9,
-        "stockQuoteUpdated": 1722058204,
-        "ticker": "BAHN B",
-        "yahooSymbol": "BAHN-B.ST"
+        ],
+        "stock": {
+          "isin": "SE0001552357",
+          "ticker": "TRAD",
+          "yahooSymbol": "TRAD.ST",
+          "marketName": "Small Cap",
+          "marketExchangeName": "OMX Stockholm",
+          "marketCountryCodeAlpha3": "SWE",
+          "sectorName": "Sällanköpsvaror",
+          "branchName": "Marknadsföring",
+          "listingDate": 1131408000,
+          "enterpriseValue": 290.73,
+          "enterpriseValueUpdated": 1722317471,
+          "stockQuote": 4.12,
+          "stockQuoteUpdated": 1722339011
+        },
+        "lei": {
+          "leiCode": "549300VR2P8X3F1UOX13",
+          "registrationStatus": "LAPSED",
+          "initialRegistrationDate": 1392432300,
+          "nextRenewalDate": 1612020540,
+          "managingLOU": "549300O897ZC5H7CY412",
+          "managingLOULegalName": "Nordic Legal Entity Identifier AB"
+        }
       },
       "highlight": {},
       "highlights": [],
-      "text_match": 1157451471441100900.0,
+      "text_match": 578730123365712000.0,
       "text_match_info": {
-        "best_field_score": "2211897868288",
+        "best_field_score": "1108091339008",
         "best_field_weight": 15,
         "fields_matched": 1,
         "num_tokens_dropped": 0,
-        "score": "1157451471441100921",
-        "tokens_matched": 2,
+        "score": "578730123365711993",
+        "tokens_matched": 1,
         "typo_prefix_score": 0
       }
     }
   ],
-  "out_of": 1006383,
+  "out_of": 876436,
   "page": 1,
   "request_params": {
-    "collection_name": "companies_20240602",
-    "first_q": "bahnhof ab",
+    "collection_name": "companies_20240730",
+    "first_q": "TRAD",
     "per_page": 10,
-    "q": "bahnhof ab"
+    "q": "TRAD"
   },
   "search_cutoff": false,
-  "search_time_ms": 2
+  "search_time_ms": 0
 }
 ```
