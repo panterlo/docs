@@ -43,51 +43,61 @@ The response is strongly typed and you will find the response model in the OpenA
 The following fields are currentley indexed in memory. These can be used in the query_by parameter. Rememeber that you can still
 limit your search result by using filter_by on ALL fields.
 
-| Field                              | Type     | Description                                                                      |
-| ---------------------------------- | -------- | -------------------------------------------------------------------------------- |
-| companyId                          | Int32    | Our global internal company identifier                                           |
-| registrationNumber                 | String   | The local registration number in the country                                     |
-| legalEntityType                    | String   | Type of legal entity as described in local market                                |
-| registrationDate (unix epoch)      | Int64    | Unix time (epoch) seconds since 1st January 1970                                 |
-| mostRecentPurpose                  | String   | The last purpose registered for the business                                     |
-| names.nameOrIdentifier             | String   | Current and former names of the business or                                      |
-| phoneNumbers.e164PhoneNumber       | String   | E164 formatted phone number                                                      |
-| phoneNumbers.numberPlanServiceType | String   | Service type as described in local number plan                                   |
-| phoneNumbers.orginalOperator       | String   | The orginal operator that held the number                                        |
-| phoneNumbers.priorOperator         | String   | Last prior operator before the porting                                           |
-| phoneNumbers.currentOperator       | String   | Current operator                                                                 |
-| phoneNumbers.lastPortingDate       | Int64    | Last porting date in Unix time (epoch) seconds since 1st January 1970            |
-| emailAddresses.emailAddress        | String   | E-mail addresses to the business                                                 |
-| hyperlinks.hyperlink               | String   | Hyperlinks to the business                                                       |
-| sniCodes.sni_2007Name              | String   | SNI 2007 name                                                                    |
-| bankAccounts.accountNumber         | String   | Bank accounts                                                                    |
-| addresses.co                       | String   | C/O = care of address                                                            |
-| addresses.street                   | String   | Street name                                                                      |
-| addresses.city                     | String   | City                                                                             |
-| addresses.postalCode               | String   | Postal Code                                                                      |
-| addresses.location                 | GeoPoint | Allows geosearch                                                                 |
-| addresses.addressType              | Int32    | 0 = mailAddress, 1 = visitingAddress, 2 = bothMailAndVisitingAddress             |
-| addresses.countryCodeAlpha3        | String   | Country code 3 char alpha                                                        |
-| documents.documentTitle            | String   | Title of the document                                                            |
-| documents.documentVersion          | String   | Version of the document                                                          |
-| stock.isin                         | String   | ISIN                                                                             |
-| stock.ticker                       | String   | Ticker symbol on market                                                          |
-| stock.marketName                   | String   | Market name                                                                      |
-| stock.marketExchangeName           | String   | Market exchange name                                                             |
-| stock.sectorName                   | String   | Business sector as provided on market                                            |
-| stock.branchName                   | String   | Business branch as provided on market                                            |
-| stock.enterpriseValue              | String   | Enterprise value last closing day                                                |
-| lei.leiCode                        | String   | LEI Code                                                                         |
-| lei.registrationStatus             | String   | RETIRED, DUPLICATE, LAPSED, ANNULLED, PENDING_TRANSFER, ISSUED, PENDING_ARCHIVAL |
-| lei.initialRegistrationDate        | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
-| lei.nextRenewalDate                | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
-| lei.managingLOU                    | String   | LEI of the managing LOU                                                          |
-| lei.managingLOULegalName           | String   | Legal name of the LOU                                                            |
+| Field                                            | Type     | Description                                                                      |
+| ------------------------------------------------ | -------- | -------------------------------------------------------------------------------- |
+| companyId                                        | Int32    | Our global internal company identifier                                           |
+| registrationNumber                               | String   | The local registration number in the country                                     |
+| legalEntityType                                  | String   | Type of legal entity as described in local market                                |
+| registrationDate (unix epoch)                    | Int64    | Unix time (epoch) seconds since 1st January 1970                                 |
+| mostRecentPurpose                                | String   | The last purpose registered for the business                                     |
+| names.nameOrIdentifier                           | String   | Current and former names of the business or                                      |
+| phoneNumbers.e164PhoneNumber                     | String   | E164 formatted phone number                                                      |
+| phoneNumbers.numberPlanServiceType               | String   | Service type as described in local number plan                                   |
+| phoneNumbers.orginalOperator                     | String   | The orginal operator that held the number                                        |
+| phoneNumbers.priorOperator                       | String   | Last prior operator before the porting                                           |
+| phoneNumbers.currentOperator                     | String   | Current operator                                                                 |
+| phoneNumbers.lastPortingDate                     | Int64    | Last porting date in Unix time (epoch) seconds since 1st January 1970            |
+| emailAddresses.emailAddress                      | String   | E-mail addresses to the business                                                 |
+| hyperlinks.hyperlink                             | String   | Hyperlinks to the business                                                       |
+| sniCodes.sni_2007Name                            | String   | SNI 2007 name                                                                    |
+| bankAccounts.accountNumber                       | String   | Bank accounts                                                                    |
+| addresses.co                                     | String   | C/O = care of address                                                            |
+| addresses.street                                 | String   | Street name                                                                      |
+| addresses.houseNumber                            | String   | The street number                                                                |
+| addresses.city                                   | String   | City                                                                             |
+| addresses.postalCode                             | String   | Postal Code                                                                      |
+| addresses.location                               | GeoPoint | Allows geosearch                                                                 |
+| addresses.addressType                            | Int32    | 0 = mailAddress, 1 = visitingAddress, 2 = bothMailAndVisitingAddress             |
+| addresses.countryCodeAlpha3                      | String   | Country code 3 char alpha                                                        |
+| documents.documentTitle                          | String   | Title of the document                                                            |
+| documents.documentVersion                        | String   | Version of the document                                                          |
+| mostRecentAnnualReportOverview.netSales          | Int32    | Net sales i K/1000 in currency for the most recent annual report                 |
+| mostRecentAnnualReportOverview.operatingProfit   | Int32    | Operating profit i K/1000 in currency for the most recent annual report          |
+| mostRecentAnnualReportOverview.profitForTheYear  | Int32    | Profit for the year K/1000 in currency for the most recent annual report         |
+| mostRecentAnnualReportOverview.profitForTheYear  | Int32    | Profit for the year K/1000 in currency for the most recent annual report         |
+| mostRecentAnnualReportOverview.operatingMargin   | Float    | Operating margin for the most recent annual report                               |
+| mostRecentAnnualReportOverview.netProfitMargin   | Float    | Net profit margin for the most recent annual report                              |
+| mostRecentAnnualReportOverview.numberOfEmployees | Int32    | Number of full time employees in the most recent annual report                   |
+| stock.isin                                       | String   | ISIN                                                                             |
+| stock.ticker                                     | String   | Ticker symbol on market                                                          |
+| stock.marketName                                 | String   | Market name                                                                      |
+| stock.marketExchangeName                         | String   | Market exchange name                                                             |
+| stock.sectorName                                 | String   | Business sector as provided on market                                            |
+| stock.branchName                                 | String   | Business branch as provided on market                                            |
+| stock.enterpriseValue                            | String   | Enterprise value last closing day                                                |
+| stock.nextReportDate                             | String   | Next report date for the listed company                                          |
+| stock.dividendExDate                             | String   | Next X-date to receive the dividend                                              |
+| lei.leiCode                                      | String   | LEI Code                                                                         |
+| lei.registrationStatus                           | String   | RETIRED, DUPLICATE, LAPSED, ANNULLED, PENDING_TRANSFER, ISSUED, PENDING_ARCHIVAL |
+| lei.initialRegistrationDate                      | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
+| lei.nextRenewalDate                              | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970    |
+| lei.managingLOU                                  | String   | LEI of the managing LOU                                                          |
+| lei.managingLOULegalName                         | String   | Legal name of the LOU                                                            |
 
-## A word about dates, unix epoch and YYYY-MM-DDTHH:mm:ss
+## Unix time only
 
-Typesense allows only unix dates to be indexed so when you see a unix epoch timestamp it means it's an indexed field. All other
-dates are returned in YYYY-MM-DDTHH:mm:ss format.
+Typesense only allows unix timestamps to be indexed so search will only present time by the number of non-leap seconds that have elapsed
+since 00:00:00 UTC on 1st January 1970, the Unix epoch.
 
 ## Examples
 
@@ -241,13 +251,13 @@ The search response for example when you search for our company would look like 
         "iso3166CountryCode": "SE",
         "registrationNumber": "5565757423",
         "legalEntityType": "Aktiebolag",
-        "registrationDate": 937260000,
+        "registrationDate": 937267200,
         "mostRecentPurpose": "Bolaget skall arbeta med konsulting, utveckling, implementering och försäljning av produkter, tjänster och mjukvaror inom områdena internet, extranet, e-commerce, management, marknadsföring och företagsprocesser, ävensom idka därmed förenlig verksamhet.",
         "names": [
           {
             "nameOrIdentifier": "Tradedoubler Aktiebolag",
             "companyNamingType": "legalName",
-            "firstSeenAtUtc": "2023-08-11T00:00:00"
+            "firstSeenAt": 1691712000
           }
         ],
         "phoneNumbers": [
@@ -314,19 +324,39 @@ The search response for example when you search for our company would look like 
             "city": "Stockholm",
             "countryCodeAlpha3": "SWE",
             "location": [59.33039, 18.05874]
+          },
+          {
+            "addressType": "mailAddress",
+            "co": null,
+            "street": "Centralplan 15 3 Tr",
+            "houseNumber": null,
+            "postalCode": "11120",
+            "city": "Stockholm",
+            "countryCodeAlpha3": null,
+            "location": null
+          },
+          {
+            "addressType": "visitingAddress",
+            "co": null,
+            "street": "Birger Jarlsgatan 57 A",
+            "houseNumber": null,
+            "postalCode": "11356",
+            "city": "Stockholm",
+            "countryCodeAlpha3": null,
+            "location": null
           }
         ],
         "documents": [
           {
             "companyDocumentId": 8846176,
             "companyDocumentType": null,
-            "documentDate": "2023-08-11T00:00:00",
+            "documentDate": 1691712000,
             "documentTitle": "Årsredovisning",
             "documentVersion": null,
             "documentValue1": null,
             "documentValue2": null,
             "documentValue3": null,
-            "comments": "{\"Godkänd datum\":\"20230811\"}"
+            "data": null
           }
         ],
         "stock": {
@@ -339,10 +369,16 @@ The search response for example when you search for our company would look like 
           "sectorName": "Sällanköpsvaror",
           "branchName": "Marknadsföring",
           "listingDate": 1131408000,
-          "enterpriseValue": 290.73,
-          "enterpriseValueUpdated": 1722317471,
-          "stockQuote": 4.12,
-          "stockQuoteUpdated": 1722339011
+          "enterpriseValue": 294.41,
+          "enterpriseValueUpdated": 1722403866,
+          "stockQuote": 4.2,
+          "stockQuoteUpdated": 1722421802,
+          "nextReportDate": 1730678400,
+          "nextReportType": "INTERIM",
+          "dividendExDate": 1716422400,
+          "dividendsPerYear": 1,
+          "dividendAmount": 0.0,
+          "dividendCurrency": "SEK"
         },
         "lei": {
           "leiCode": "549300VR2P8X3F1UOX13",
@@ -353,9 +389,20 @@ The search response for example when you search for our company would look like 
           "managingLOULegalName": "Nordic Legal Entity Identifier AB"
         }
       },
-      "highlight": {},
-      "highlights": [],
-      "text_match": 578730123365712000.0,
+      "highlight": {
+        "registrationNumber": {
+          "matched_tokens": ["5565757423"],
+          "snippet": "<mark>5565757423</mark>"
+        }
+      },
+      "highlights": [
+        {
+          "field": "registrationNumber",
+          "matched_tokens": ["5565757423"],
+          "snippet": "<mark>5565757423</mark>"
+        }
+      ],
+      "text_match": 578730123365711993.0,
       "text_match_info": {
         "best_field_score": "1108091339008",
         "best_field_weight": 15,
@@ -367,13 +414,13 @@ The search response for example when you search for our company would look like 
       }
     }
   ],
-  "out_of": 876436,
+  "out_of": 877347,
   "page": 1,
   "request_params": {
-    "collection_name": "companies_20240730",
-    "first_q": "TRAD",
+    "collection_name": "companies_20240731",
+    "first_q": "5565757423",
     "per_page": 10,
-    "q": "TRAD"
+    "q": "5565757423"
   },
   "search_cutoff": false,
   "search_time_ms": 0
