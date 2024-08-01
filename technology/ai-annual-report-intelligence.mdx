@@ -1,0 +1,112 @@
+---
+title: AI Annual Report Intelligence
+description: 'How we detect discrepancies in annual reports and financial statement frauds'
+---
+
+Credit reference agencies gives lenders and and others a range of information about the
+pontential borrower, customer or vendor. A signifcant part of this information is based
+on annual reports and other financial statements belonging to the business.
+
+The same set of financial data is also exposed in business information services provided
+by a large number of actors in the market.
+
+In countries such as Sweden the mandatory audit requirement for businesses was removed in 2010
+which allows businesses under certain thresholds to save money by not having an auditor. This
+has created new challenges which has remained unsolved by our competitors. Companies can
+submit financial statements and annual reports that contains any made up numbers and authorities
+have very littile possibilities to detect these.
+
+## Solution
+
+Togheter with [AI intelligent document processing, IDP](/technology/ai-intelligent-document-processing), we detect a large number of discrepancies in
+annual reports such as these examples:
+
+- Similarities in annual reports based on historic annual reports for all businesses, e.g has the
+  annual report been copied from another business or part of the data been modified
+- Unrestricted equity doesn't balance between the years
+- The annual report doesn't adhere to requirement per local regulations for example in Sweden Annual Accounts Act
+  according to K2 (BFNAR 2016:10) / K3 (BFNAR 2012:1)
+- Visually aligning with known accounting systems that typically produce annual reports
+
+These discrepancies are registered on each document with links to which similarities exists
+with other documents. The discrepancies are summed up and expressed in words what is wrong
+with a score discrepancy ranking between 0-255 where 0 means just a note while 255 means something
+very a significant discrepancy.
+
+You will find examples in our API when we return for example:
+
+```json Search response for companies
+{
+  "intelligence": [
+    {
+      "companyIntelligenceType": "annualReportDiscrepancies",
+      "notes": "The annual report for 2021-01-01 till 2021-12-31 is
+      similar to one or many more annual reports that
+      has been submitted for other companies",
+      "score": 255,
+      "firstSeenAt": 1711843200
+    }
+  ]
+}
+```
+
+## Example
+
+A business with an auditor submits an annual report for the year ending 2020-12-31. The following
+year another business without an auditor submits a copy of the same annual report
+but the multi-year overview is wrong and one of the digits in the organizational number has been
+removed.
+
+Visually compairing the result sheet for both businesses you can notice that the rows and amounts are
+the same with the difference for the year.
+
+<img className='block' src='/images/example1_rr.png' alt='resultsheet' />
+
+Visually compairing the balance sheet for both businesses you can notice that the rows and amounts are
+the same with the difference for the year.
+
+<img className='block' src='/images/example1_br.png' alt='balancesheet' />
+
+The business that made a copy of the annual report report has also copied the overview with the
+other business change of equity. The following image shows that the outgoing balance should be 372,707 SEK
+in unrestricted equity.
+
+<img
+  className='block'
+  src='/images/example1_changequity.png'
+  alt='change of equity'
+/>
+
+The following year the summary with change of equity doesn't match with the prior year. For the year
+ending 2022-12-31 the business reports that the ingoing unstricted equity balance is 1,245,154 SEK
+while the prior year had an outgoing balance of 372,707 SEK. There are no remarks regarding
+the changes of the unrestricted equity.
+
+<img
+  className='block'
+  src='/images/example1_changequity_followingyear.png'
+  alt='change of equity following year'
+/>
+
+In the balance sheet of the business it's reporting a change in credit facility debt of 1,467,157 SEK.
+
+## How common is financial statement frauds
+
+We have learned by looking at discrepancies for the last ten years that financial statement frauds are
+more common in businesses that lacks auditor requirements but do exist in both. It's easy to create a new
+business, submit a fradulent financial report with good looking number and get a descent credit score
+ranking by existing credit reference agencies. The companies are then used to receive contributions
+and borrow money and then eventually they go bankrupt.
+
+Often we see networks of companies using the same set of financial records but with no links between
+the company representatives.
+
+This anonymized example shows a small portion of a network of such companies where eight businesses uses
+two set of different financial reports but there are no links between the yellow company representatives.
+This demonstrates the problem that these companies ultimatley are controlled by other individuals.
+
+<img
+  className='block'
+  src='/images/example_network_financial_statement_fraud.png'
+  alt='example network financial statement fraud'
+/>
