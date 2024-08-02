@@ -71,6 +71,8 @@ limit your search result by using filter_by on ALL fields.
 | addresses.countryCodeAlpha3                      | String   | Country code 3 char alpha                                                        |
 | documents.documentTitle                          | String   | Title of the document                                                            |
 | documents.documentVersion                        | String   | Version of the document                                                          |
+| intelligence.companyIntelligenceType             | Int32    | The specific enum (int) that you want to query by                                |
+| intelligence.notes                               | String   | The description of the discrepancy                                               |
 | mostRecentAnnualReportOverview.netSales          | Int32    | Net sales i K/1000 in currency for the most recent annual report                 |
 | mostRecentAnnualReportOverview.operatingProfit   | Int32    | Operating profit i K/1000 in currency for the most recent annual report          |
 | mostRecentAnnualReportOverview.profitForTheYear  | Int32    | Profit for the year K/1000 in currency for the most recent annual report         |
@@ -192,7 +194,7 @@ key=your_api_key
 
 ### Multi search
 
-Multi search enables you to carry out multi searches in one request by posting a json model to the search endpoint. Typesense have a description of the feature in their [documentation](https://typesense.org/docs/26.0/api/federated-multi-search.html9).
+Multi search enables you to carry out multi searches in one request by posting a json model to the search endpoint. Typesense have a description of the feature in their [documentation](https://typesense.org/docs/26.0/api/federated-multi-search.html).
 
 Here is an example of how to use multisearch while searching for a company registration number, e-mail, stock ticker and LEI code.
 
