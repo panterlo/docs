@@ -103,6 +103,18 @@ limit your search result by using filter_by on ALL fields.
 | franchisesOrLicences.linkedToName                | String   | The name of the licencee or company providing the franchise                               |
 | franchisesOrLicences.actingUnderName             | String   | The name/s under which the company is acting under                                        |
 | franchisesOrLicences.linkedToCompanyId           | Int32    | The company id if exists for which the licence or franchise was given                     |
+| hasPhoneNumbers                                  | Bool     | Helper flag for knowing if the company has phone numbers present                          |
+| hasEmailAddresses                                | Bool     | Helper flag for knowing if the company has email addresses present                        |
+| hasHyperlinks                                    | Bool     | Helper flag for knowing if the company has hyperlinks present                             |
+| hasIntelligence                                  | Bool     | Helper flag for knowing if the company has intelligence records present                   |
+| hasStatus                                        | Bool     | Helper flag for knowing if the company has status records present                         |
+| hasBankAccounts                                  | Bool     | Helper flag for knowing if the company has bank accounts present                          |
+| hasAddresses                                     | Bool     | Helper flag for knowing if the company has addresses present                              |
+| hasDocuments                                     | Bool     | Helper flag for knowing if the company has documents present                              |
+| hasStock                                         | Bool     | Helper flag for knowing if the company has stock data present                             |
+| hasLEI                                           | Bool     | Helper flag for knowing if the company has LEI information present                        |
+| hasECParticipant                                 | Bool     | Helper flag for knowing if the company has EU participant information present             |
+| hasFranchisesOrLicences                          | Bool     | Helper flag for knowing if the company has franchises or licences present                 |
 
 ## Unix time only
 
@@ -278,62 +290,67 @@ The search response for example when you search for our company would look like 
   "hits": [
     {
       "document": {
-        "id": "2816023",
-        "companyId": 2816023,
+        "id": "2780399",
+        "companyId": 2780399,
         "iso3166CountryCode": "SE",
-        "registrationNumber": "5565757423",
+        "registrationNumber": "5568057029",
         "legalEntityType": "Aktiebolag",
-        "registrationDate": 937267200,
-        "mostRecentPurpose": "Bolaget skall arbeta med konsulting, utveckling, implementering och försäljning av produkter, tjänster och mjukvaror inom områdena internet, extranet, e-commerce, management, marknadsföring och företagsprocesser, ävensom idka därmed förenlig verksamhet.",
+        "registrationDate": 1271721600,
+        "mostRecentPurpose": "Bolaget ska bedriva verksamhet med utveckling, tillverkning och försäljning av elektroniska produkter inom områdena elektrisk energi och elektrisk mätteknik samt bedriva konsultverksamhet inom nämnda områden, ävensom bedriva annan därmed förenlig verksamhet.",
         "names": [
           {
-            "nameOrIdentifier": "Tradedoubler Aktiebolag",
+            "nameOrIdentifier": "Ferroamp Ab (Publ)",
             "companyNamingType": "legalName",
-            "firstSeenAt": 1691712000
+            "firstSeenAt": 1713544993
           }
         ],
         "phoneNumbers": [
           {
-            "e164PhoneNumber": "+4684050800",
+            "e164PhoneNumber": "+46868433390",
             "phoneNumberType": "fixedLine",
             "numberPlanServiceType": "Fasta telefonitjänster 08,031,040",
-            "orginalOperator": "Telia Sverige AB",
-            "priorOperator": "Telia Sverige AB",
-            "currentOperator": "GTT Communications Sweden AB",
-            "lastPortingDate": 1383177600
+            "orginalOperator": "Tele2 Sverige AB",
+            "priorOperator": "Tele2 Sverige AB",
+            "currentOperator": "TelaVox AB",
+            "lastPortingDate": 1586304000
           }
         ],
+        "hasPhoneNumbers": true,
         "emailAddresses": [],
+        "hasEmailAddresses": false,
         "hyperlinks": [
           {
-            "hyperlink": "https://se.linkedin.com/company/tradedoubler",
-            "hyperlinkType": "linkedIn"
-          },
-          {
-            "hyperlink": "https://www.tradedoubler.com/sv/releases/forandrat-antal-aktier-och-roster-i-tradedoubler-aktiebolag/",
+            "hyperlink": "https://ferroamp.com/",
             "hyperlinkType": "homepage"
           }
         ],
+        "hasHyperlinks": true,
         "sniCodes": [
           {
-            "sni_2007Code": "58290",
-            "sni_2007Name": "Utgivning av annan programvara"
+            "sni_2007Code": "46141",
+            "sni_2007Name": "Provisionshandel med maskiner, industriell utrustning, fartyg och luftfartyg utom kontorsutrustning och datorer"
+          },
+          {
+            "sni_2007Code": "71123",
+            "sni_2007Name": "Teknisk konsultverksamhet inom elteknik"
           }
         ],
         "intelligence": [],
+        "hasIntelligence": false,
         "status": [],
+        "hasStatus": false,
         "mostRecentAnnualReportOverview": {
           "annualReportPeriod": 202212,
-          "netSales": 134814,
-          "operatingProfit": 12128,
-          "profitForTheYear": 5492,
-          "grossMargin": 79.83,
-          "operatingMargin": 9.0,
-          "netProfitMargin": 4.09,
-          "equityAssetsRatio": 20.02,
-          "quickRatio": 77.93,
-          "netSalesChange": 26.6,
-          "numberOfEmployees": 38
+          "netSales": 205112,
+          "operatingProfit": -54106,
+          "profitForTheYear": -54262,
+          "grossMargin": 18.52,
+          "operatingMargin": -26.38,
+          "netProfitMargin": -26.45,
+          "equityAssetsRatio": 68.33,
+          "quickRatio": 166.51,
+          "netSalesChange": 86.1,
+          "numberOfEmployees": 61
         },
         "isRegisteredForVAT": true,
         "isRegisteredForFTax": true,
@@ -342,99 +359,113 @@ The search response for example when you search for our company would look like 
         "bankAccounts": [
           {
             "bankAccountType": "bankgiro",
-            "accountNumber": "52834553",
+            "accountNumber": "6145767",
             "swift_BIC": null
           }
         ],
+        "hasBankAccounts": true,
         "addresses": [
           {
             "addressType": "mailAddress",
             "co": null,
-            "street": "Centralplan",
-            "houseNumber": "15",
-            "postalCode": "11120",
-            "city": "Stockholm",
+            "street": "Bergtorpsvägen",
+            "houseNumber": "43B",
+            "postalCode": "18364",
+            "city": "Näsbypark",
             "countryCodeAlpha3": "SWE",
-            "location": [59.33039, 18.05874]
-          },
-          {
-            "addressType": "mailAddress",
-            "co": null,
-            "street": "Centralplan 15 3 Tr",
-            "houseNumber": null,
-            "postalCode": "11120",
-            "city": "Stockholm",
-            "countryCodeAlpha3": null,
-            "location": null
+            "location": [59.44228, 18.09534]
           },
           {
             "addressType": "visitingAddress",
             "co": null,
-            "street": "Birger Jarlsgatan 57 A",
-            "houseNumber": null,
-            "postalCode": "11356",
-            "city": "Stockholm",
-            "countryCodeAlpha3": null,
-            "location": null
+            "street": "Odlingsgatan",
+            "houseNumber": "7B",
+            "postalCode": "17453",
+            "city": "Hallonbergen",
+            "countryCodeAlpha3": "SWE",
+            "location": [59.37769, 17.96887]
           }
         ],
+        "hasAddresses": true,
         "documents": [
           {
-            "companyDocumentId": 8846176,
+            "companyDocumentId": 8557073,
             "companyDocumentType": null,
-            "documentDate": 1691712000,
+            "documentDate": 1716336000,
             "documentTitle": "Årsredovisning",
             "documentVersion": null,
             "documentValue1": null,
             "documentValue2": null,
             "documentValue3": null,
-            "data": null
+            "data": {
+              "Mottagen hos Bolagsverket datum": "20240522"
+            }
+          },
+          {
+            "companyDocumentId": 8557074,
+            "companyDocumentType": null,
+            "documentDate": 1716336000,
+            "documentTitle": "Bemyndigande om ökning av aktiekapitalet genom nyemission",
+            "documentVersion": "2024/281149",
+            "documentValue1": null,
+            "documentValue2": "NEW",
+            "documentValue3": null,
+            "data": {
+              "Status": "NEW"
+            }
           }
         ],
+        "hasDocuments": true,
         "stock": {
-          "isin": "SE0001552357",
-          "ticker": "TRAD",
-          "yahooSymbol": "TRAD.ST",
-          "marketName": "Small Cap",
+          "isin": "SE0012229920",
+          "ticker": "FERRO",
+          "yahooSymbol": "FERRO.ST",
+          "marketName": "First North",
           "marketExchangeName": "OMX Stockholm",
           "marketCountryCodeAlpha3": "SWE",
-          "sectorName": "Sällanköpsvaror",
-          "branchName": "Marknadsföring",
-          "listingDate": 1131408000,
-          "enterpriseValue": 294.41,
-          "enterpriseValueUpdated": 1722403866,
-          "stockQuote": 4.2,
-          "stockQuoteUpdated": 1722421802,
-          "nextReportDate": 1730678400,
+          "sectorName": "Industri",
+          "branchName": "Energi & Återvinning",
+          "listingDate": 1553212800,
+          "enterpriseValue": 279.22,
+          "enterpriseValueUpdated": 1722663064,
+          "stockQuote": 8.11,
+          "stockQuoteUpdated": 1722663015,
+          "nextReportDate": 1730937600,
           "nextReportType": "INTERIM",
-          "dividendExDate": 1716422400,
+          "dividendExDate": 1715904000,
           "dividendsPerYear": 1,
           "dividendAmount": 0.0,
           "dividendCurrency": "SEK"
         },
+        "hasStock": true,
         "lei": {
-          "leiCode": "549300VR2P8X3F1UOX13",
-          "registrationStatus": "LAPSED",
-          "initialRegistrationDate": 1392432300,
-          "nextRenewalDate": 1612020540,
+          "leiCode": "549300RS7OQHGNOP2H55",
+          "registrationStatus": "ISSUED",
+          "initialRegistrationDate": 1549470720,
+          "nextRenewalDate": 1748519142,
           "managingLOU": "549300O897ZC5H7CY412",
           "managingLOULegalName": "Nordic Legal Entity Identifier AB"
-        }
+        },
+        "hasLEI": true,
+        "ecParticipant": {
+          "pic": "934799283",
+          "validationStatus": "Validated",
+          "numberOfProjects": 4,
+          "workProgrammesData": [
+            {
+              "key": "H2020",
+              "value": 4
+            }
+          ],
+          "lastUpdated": 1722698706
+        },
+        "hasECParticipant": true,
+        "franchisesOrLicences": [],
+        "hasFranchisesOrLicences": false
       },
-      "highlight": {
-        "registrationNumber": {
-          "matched_tokens": ["5565757423"],
-          "snippet": "<mark>5565757423</mark>"
-        }
-      },
-      "highlights": [
-        {
-          "field": "registrationNumber",
-          "matched_tokens": ["5565757423"],
-          "snippet": "<mark>5565757423</mark>"
-        }
-      ],
-      "text_match": 578730123365711993.0,
+      "highlight": {},
+      "highlights": [],
+      "text_match": 578730123365712000.0,
       "text_match_info": {
         "best_field_score": "1108091339008",
         "best_field_weight": 15,
@@ -446,15 +477,15 @@ The search response for example when you search for our company would look like 
       }
     }
   ],
-  "out_of": 877347,
+  "out_of": 882480,
   "page": 1,
   "request_params": {
-    "collection_name": "companies_20240731",
-    "first_q": "5565757423",
+    "collection_name": "companies_20240804",
+    "first_q": "934799283",
     "per_page": 10,
-    "q": "5565757423"
+    "q": "934799283"
   },
   "search_cutoff": false,
-  "search_time_ms": 0
+  "search_time_ms": 10
 }
 ```
