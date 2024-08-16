@@ -1,6 +1,7 @@
 ---
 title: 'Search in  financial reports'
 description: 'Lightning fast and ultra modern search management reports, audit report, financial reports'
+mode: 'wide'
 ---
 
 With our search in financial reports you can search by text and data in management reports, details, comments, audit
@@ -182,9 +183,10 @@ key=your_api_key
               },
 ```
 
-### Search for financial reports with remarks
+### Search for financial reports with remarks (first)
 
-There are multiple ways to search for remarks. One way is looking at the field: "andraKravLagForfattningAnmarkning"
+There are multiple ways to search for remarks. One way is looking at the field: "andraKravLagForfattningAnmarkning".
+Second example will show another way.
 
 ```bash cURL
 curl https://api.tic.io/search/companies/reports/se
@@ -212,7 +214,62 @@ key=your_api_key
                 "revisor": {
                     "pateckningRevisionsberattelseEnligtStandardutformning": "2023-12-18",
                     "harPateckningRevisionsberattelseEnligtStandardutformning": true,
-                    "andraKravLagForfattningAnmarkning": "AnmärkningVid flera tillfällen under året har avdragen skatt och sociala avgifter betalts för sent. Styrelsen har därmed inte fullgjort sina skyldigheter enligt 8 kap. 4 § aktiebolagslagen. Försummelsen har inte medfört någon skada för bolaget utöver dröjsmålsräntor.",
+                    "andraKravLagForfattningAnmarkning": "Vid flera tillfällen under året har avdragen skatt
+                    och sociala avgifter betalts för sent. Styrelsen har därmed inte fullgjort sina skyldigheter
+                    enligt 8 kap. 4 § aktiebolagslagen. Försummelsen har inte medfört någon skada för bolaget
+                    utöver dröjsmålsräntor.",
                     "harAndraKravLagForfattningAnmarkning": true,
               },
+```
+
+### Search for financial reports with remarks (second)
+
+There are multiple ways to search for remarks. One way is looking at the field: "andraKravLagForfattningAnmarkning".
+Second example will show another way.
+
+```bash cURL
+curl https://api.tic.io/search/companies/reports/se
+q=felaktigt&
+query_by=skatt&query_by=revisor.grundUttalanden&
+key=your_api_key
+{
+    "facet_counts": [],
+    "found": 2,
+    "hits": [
+        {
+            "document": {
+                "id": "457991",
+                "companyId": 3395567,
+                "companyName": "ONE CC AB",
+                "externalId": 457991,
+                "registrationNumber": 5565856407,
+                "periodEnd": 202312,
+                "ruleset": "K3",
+                "formatDescription": "Årsredovisning med kostnadsslagsindelad resultaträkning och balansräkning",
+                "caseNumber": 9517336,
+                "caseYear": 2024,
+                "netSalesK": 58128,
+                "numberOfEmployees": 8,
+                "balanceSheetTotalK": 21131,
+                  "revisor": {
+                    "harPateckningRevisionsberattelseEnligtStandardutformning": false,
+                    "andraKravLagForfattningAnmarkning": "Som framgår av min Rapport om årsredovisningen tillstyrker jag inte värdet av
+                    fordringar hos koncernföretag. Denna bedömning är av betydelse för styrelsens eventuella ansvar att upprätta en
+                    kontrollbalansräkning enligt 25 kap. 13§ Aktiebolagslagen. Någon kontrollbalansräkning har inte upprättats vilket
+                    föranleder anmärkning.",
+                    "harAndraKravLagForfattningAnmarkning": true,
+                    "ovrigaUpplysningar": "Revisionen av årsredovisningen för år 2022 har utförts av en annan revisor vars uppdrag upphörde
+                     i förtid och som lämnat en revisionsberättelse daterad 30 juni 2023 med modifierade uttalanden i Rapport om årsredovisningen.
+                     Revisorn har avstyrkt att balans och resultaträkningen fastställs.",
+                    "grundUttalanden": "Fordringar hos koncernföretag avser fordringar på spanska dotterbolaget och
+                    har upptagits till 16 128 865 kr. Några revisionsbevis som styrker betalningsförmågan hos dotterbolaget har inte erhållits
+                    och felaktig­heten är väsentlig för årsredovisningen som helhet. Till följd av detta kan jag inte tillstyrka värdet av
+                    fordringar hos koncernföretag. Jag har utfört revisionen enligt International Standards on Auditing (ISA) och god r
+                    evisionssed i Sverige. Mitt ansvar enligt dessa standarder beskrivs närmare i avsnittet Revisorns ansvar.
+                    Jag är oberoende i förhållande till ONE CC AB enligt god revisorssed i Sverige och har i övrigt fullgjort mitt
+                    yrkesetiska ansvar enligt dessa krav.Jag anser att de revisionsbevis jag har inhämtat är tillräckliga och ändamålsenliga
+                     som grund för mina uttalanden med avvikande mening.",
+                    "harGrundUttalanden": true...
+                "reportSoftwareMetaTag": "Wolters Kluwer Bokslut",
+                "reportSoftwareVersionMetaTag": "2024.1.2"...
 ```
