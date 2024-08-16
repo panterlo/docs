@@ -75,6 +75,7 @@
     {
       "group": "Industry Datasets",
       "pages": [
+        "datasets/search-reports-se",
         "datasets/europeancommission",
         "datasets/finansinspektionen",
         "datasets/ica"

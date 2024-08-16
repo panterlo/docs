@@ -3,6 +3,13 @@ title: 'Search'
 description: 'Lightning fast and ultra modern search search-as-you-type, autocomplete, geo-search, LLM augmentation'
 ---
 
+<Tip>
+  You can now also search in financial reports by foot notes, management
+  comments/report, audit report, software used to produce the financial report
+  and much more. [Read more in the documentation
+  here](/datasets/search-reports-se)
+</Tip>
+
 We provide an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
 That means that all features described in [Typesense API version 26](https://typesense.org/docs/26.0/api/) is available in our API.
 Data is continously reindexed as new data arrives.
@@ -10,8 +17,7 @@ Data is continously reindexed as new data arrives.
 Search index is stored on RAM memory meaning requests to our search serves very fast and you can use it for search-as-you-type,
 autocomplete and other applications.
 
-In companies search you can query (query_by) based on 37 fields listed in the next chapter. You can also filter on
-more than 60 additional fields.
+In companies search you can query (query_by) by more than 60 fields listed in the next chapter.
 
 Examples on what you can query on:
 
@@ -45,76 +51,84 @@ The response is strongly typed and you will find the response model in the OpenA
 The following fields are currentley indexed in memory. These can be used in the query_by parameter. Rememeber that you can still
 limit your search result by using filter_by on ALL fields.
 
-| Field                                            | Type     | Description                                                                               |
-| ------------------------------------------------ | -------- | ----------------------------------------------------------------------------------------- |
-| companyId                                        | Int32    | Our global internal company identifier                                                    |
-| registrationNumber                               | String   | The local registration number in the country                                              |
-| legalEntityType                                  | String   | Type of legal entity as described in local market                                         |
-| registrationDate (unix epoch)                    | Int64    | Unix time (epoch) seconds since 1st January 1970                                          |
-| mostRecentPurpose                                | String   | The last purpose registered for the business                                              |
-| names.nameOrIdentifier                           | String   | Current and former names of the business or                                               |
-| phoneNumbers.e164PhoneNumber                     | String   | E164 formatted phone number                                                               |
-| phoneNumbers.numberPlanServiceType               | String   | Service type as described in local number plan                                            |
-| phoneNumbers.orginalOperator                     | String   | The orginal operator that held the number                                                 |
-| phoneNumbers.priorOperator                       | String   | Last prior operator before the porting                                                    |
-| phoneNumbers.currentOperator                     | String   | Current operator                                                                          |
-| phoneNumbers.lastPortingDate                     | Int64    | Last porting date in Unix time (epoch) seconds since 1st January 1970                     |
-| emailAddresses.emailAddress                      | String   | E-mail addresses to the business                                                          |
-| hyperlinks.hyperlink                             | String   | Hyperlinks to the business                                                                |
-| sniCodes.sni_2007Name                            | String   | SNI 2007 name                                                                             |
-| bankAccounts.accountNumber                       | String   | Bank accounts                                                                             |
-| addresses.co                                     | String   | C/O = care of address                                                                     |
-| addresses.street                                 | String   | Street name                                                                               |
-| addresses.houseNumber                            | String   | The street number                                                                         |
-| addresses.city                                   | String   | City                                                                                      |
-| addresses.postalCode                             | String   | Postal Code                                                                               |
-| addresses.location                               | GeoPoint | Allows geosearch                                                                          |
-| addresses.addressType                            | Int32    | 0 = mailAddress, 1 = visitingAddress, 2 = bothMailAndVisitingAddress                      |
-| addresses.countryCodeAlpha3                      | String   | Country code 3 char alpha                                                                 |
-| documents.documentTitle                          | String   | Title of the document                                                                     |
-| documents.documentVersion                        | String   | Version of the document                                                                   |
-| intelligence.companyIntelligenceType             | Int32    | The specific enum (int) that you want to query by                                         |
-| intelligence.notes                               | String   | The description of the discrepancy                                                        |
-| mostRecentAnnualReportOverview.netSales          | Int32    | Net sales i K/1000 in currency for the most recent annual report                          |
-| mostRecentAnnualReportOverview.operatingProfit   | Int32    | Operating profit i K/1000 in currency for the most recent annual report                   |
-| mostRecentAnnualReportOverview.profitForTheYear  | Int32    | Profit for the year K/1000 in currency for the most recent annual report                  |
-| mostRecentAnnualReportOverview.profitForTheYear  | Int32    | Profit for the year K/1000 in currency for the most recent annual report                  |
-| mostRecentAnnualReportOverview.operatingMargin   | Float    | Operating margin for the most recent annual report                                        |
-| mostRecentAnnualReportOverview.netProfitMargin   | Float    | Net profit margin for the most recent annual report                                       |
-| mostRecentAnnualReportOverview.numberOfEmployees | Int32    | Number of full time employees in the most recent annual report                            |
-| stock.isin                                       | String   | ISIN                                                                                      |
-| stock.ticker                                     | String   | Ticker symbol on market                                                                   |
-| stock.marketName                                 | String   | Market name                                                                               |
-| stock.marketExchangeName                         | String   | Market exchange name                                                                      |
-| stock.sectorName                                 | String   | Business sector as provided on market                                                     |
-| stock.branchName                                 | String   | Business branch as provided on market                                                     |
-| stock.enterpriseValue                            | String   | Enterprise value last closing day                                                         |
-| stock.nextReportDate                             | String   | Next report date for the listed company                                                   |
-| stock.dividendExDate                             | String   | Next X-date to receive the dividend                                                       |
-| lei.leiCode                                      | String   | LEI Code                                                                                  |
-| lei.registrationStatus                           | String   | RETIRED, DUPLICATE, LAPSED, ANNULLED, PENDING_TRANSFER, ISSUED, PENDING_ARCHIVAL          |
-| lei.initialRegistrationDate                      | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970             |
-| lei.nextRenewalDate                              | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970             |
-| lei.managingLOU                                  | String   | LEI of the managing LOU                                                                   |
-| lei.managingLOULegalName                         | String   | Legal name of the LOU                                                                     |
-| ecParticipant.pic                                | String   | Participant Identification Code (PIC) as registered with European Commission              |
-| ecParticipant.validationStatus                   | String   | Declared, Validated, Sleeping, Suspended, Blocked, Deprecated (see further documentation) |
-| ecParticipant.numberOfProjects                   | Int32    | Number of projects where the organization has been present with the PIC                   |
-| franchisesOrLicences.linkedToName                | String   | The name of the licencee or company providing the franchise                               |
-| franchisesOrLicences.actingUnderName             | String   | The name/s under which the company is acting under                                        |
-| franchisesOrLicences.linkedToCompanyId           | Int32    | The company id if exists for which the licence or franchise was given                     |
-| hasPhoneNumbers                                  | Bool     | Helper flag for knowing if the company has phone numbers present                          |
-| hasEmailAddresses                                | Bool     | Helper flag for knowing if the company has email addresses present                        |
-| hasHyperlinks                                    | Bool     | Helper flag for knowing if the company has hyperlinks present                             |
-| hasIntelligence                                  | Bool     | Helper flag for knowing if the company has intelligence records present                   |
-| hasStatus                                        | Bool     | Helper flag for knowing if the company has status records present                         |
-| hasBankAccounts                                  | Bool     | Helper flag for knowing if the company has bank accounts present                          |
-| hasAddresses                                     | Bool     | Helper flag for knowing if the company has addresses present                              |
-| hasDocuments                                     | Bool     | Helper flag for knowing if the company has documents present                              |
-| hasStock                                         | Bool     | Helper flag for knowing if the company has stock data present                             |
-| hasLEI                                           | Bool     | Helper flag for knowing if the company has LEI information present                        |
-| hasECParticipant                                 | Bool     | Helper flag for knowing if the company has EU participant information present             |
-| hasFranchisesOrLicences                          | Bool     | Helper flag for knowing if the company has franchises or licences present                 |
+| Field                                             | Type     | Description                                                                               |
+| ------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------- |
+| companyId                                         | Int32    | Our global internal company identifier                                                    |
+| registrationNumber                                | String   | The local registration number in the country                                              |
+| legalEntityType                                   | String   | Type of legal entity as described in local market                                         |
+| registrationDate (unix epoch)                     | Int64    | Unix time (epoch) seconds since 1st January 1970                                          |
+| mostRecentPurpose                                 | String   | The last purpose registered for the business                                              |
+| names.nameOrIdentifier                            | String   | Current and former names of the business or                                               |
+| phoneNumbers.e164PhoneNumber                      | String   | E164 formatted phone number                                                               |
+| phoneNumbers.numberPlanServiceType                | String   | Service type as described in local number plan                                            |
+| phoneNumbers.orginalOperator                      | String   | The orginal operator that held the number                                                 |
+| phoneNumbers.priorOperator                        | String   | Last prior operator before the porting                                                    |
+| phoneNumbers.currentOperator                      | String   | Current operator                                                                          |
+| phoneNumbers.lastPortingDate                      | Int64    | Last porting date in Unix time (epoch) seconds since 1st January 1970                     |
+| emailAddresses.emailAddress                       | String   | E-mail addresses to the business                                                          |
+| hyperlinks.hyperlink                              | String   | Hyperlinks to the business                                                                |
+| sniCodes.sni_2007Name                             | String   | SNI 2007 name                                                                             |
+| bankAccounts.accountNumber                        | String   | Bank accounts                                                                             |
+| addresses.co                                      | String   | C/O = care of address                                                                     |
+| addresses.street                                  | String   | Street name                                                                               |
+| addresses.houseNumber                             | String   | The street number                                                                         |
+| addresses.city                                    | String   | City                                                                                      |
+| addresses.postalCode                              | String   | Postal Code                                                                               |
+| addresses.location                                | GeoPoint | Allows geosearch                                                                          |
+| addresses.addressType                             | Int32    | 0 = mailAddress, 1 = visitingAddress, 2 = bothMailAndVisitingAddress                      |
+| addresses.countryCodeAlpha3                       | String   | Country code 3 char alpha                                                                 |
+| documents.documentTitle                           | String   | Title of the document                                                                     |
+| documents.documentVersion                         | String   | Version of the document                                                                   |
+| intelligence.companyIntelligenceType              | Int32    | The specific enum (int) that you want to query by                                         |
+| intelligence.notes                                | String   | The description of the discrepancy                                                        |
+| mostRecentAnnualReportOverview.annualReportPeriod | Int32    | The endpoint report of the annual report in YYYYMM as Int32                               |
+| mostRecentAnnualReportOverview.netSales           | Int32    | Net sales i K/1000 in currency for the most recent annual report                          |
+| mostRecentAnnualReportOverview.operatingProfit    | Int32    | Operating profit i K/1000 in currency for the most recent annual report                   |
+| mostRecentAnnualReportOverview.profitForTheYear   | Int32    | Profit for the year K/1000 in currency for the most recent annual report                  |
+| mostRecentAnnualReportOverview.grossMargin        | Int32    | Profit for the year K/1000 in currency for the most recent annual report                  |
+| mostRecentAnnualReportOverview.operatingMargin    | Float    | Operating margin for the most recent annual report                                        |
+| mostRecentAnnualReportOverview.netProfitMargin    | Float    | Net profit margin for the most recent annual report                                       |
+| mostRecentAnnualReportOverview.equityAssetsRatio  | Float    | Equity to assets ratio                                                                    |
+| mostRecentAnnualReportOverview.quickRatio         | Float    | Liquidity ratio                                                                           |
+| mostRecentAnnualReportOverview.netSalesChange     | Float    | Change of net sales from last year                                                        |
+| mostRecentAnnualReportOverview.numberOfEmployees  | Int32    | Number of full time employees in the most recent annual report                            |
+| mostRecentAnnualReportOverview.ruleset            | String   | Which ruleset was used to format the annual report                                        |
+| mostRecentAnnualReportOverview.formatDescription  | String   | Human description of the type of the annual report                                        |
+| mostRecentAnnualReportOverview.periodStart        | Int32    | Start of the last annual report period in YYYYMM in Int32                                 |
+| mostRecentAnnualReportOverview.periodEnd          | Int32    | End of the last annual report period in YYYYMM in Int32                                   |
+| stock.isin                                        | String   | ISIN                                                                                      |
+| stock.ticker                                      | String   | Ticker symbol on market                                                                   |
+| stock.marketName                                  | String   | Market name                                                                               |
+| stock.marketExchangeName                          | String   | Market exchange name                                                                      |
+| stock.sectorName                                  | String   | Business sector as provided on market                                                     |
+| stock.branchName                                  | String   | Business branch as provided on market                                                     |
+| stock.enterpriseValue                             | String   | Enterprise value last closing day                                                         |
+| stock.nextReportDate                              | String   | Next report date for the listed company                                                   |
+| stock.dividendExDate                              | String   | Next X-date to receive the dividend                                                       |
+| lei.leiCode                                       | String   | LEI Code                                                                                  |
+| lei.registrationStatus                            | String   | RETIRED, DUPLICATE, LAPSED, ANNULLED, PENDING_TRANSFER, ISSUED, PENDING_ARCHIVAL          |
+| lei.initialRegistrationDate                       | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970             |
+| lei.nextRenewalDate                               | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970             |
+| lei.managingLOU                                   | String   | LEI of the managing LOU                                                                   |
+| lei.managingLOULegalName                          | String   | Legal name of the LOU                                                                     |
+| ecParticipant.pic                                 | String   | Participant Identification Code (PIC) as registered with European Commission              |
+| ecParticipant.validationStatus                    | String   | Declared, Validated, Sleeping, Suspended, Blocked, Deprecated (see further documentation) |
+| ecParticipant.numberOfProjects                    | Int32    | Number of projects where the organization has been present with the PIC                   |
+| franchisesOrLicences.linkedToName                 | String   | The name of the licencee or company providing the franchise                               |
+| franchisesOrLicences.actingUnderName              | String   | The name/s under which the company is acting under                                        |
+| franchisesOrLicences.linkedToCompanyId            | Int32    | The company id if exists for which the licence or franchise was given                     |
+| hasPhoneNumbers                                   | Bool     | Helper flag for knowing if the company has phone numbers present                          |
+| hasEmailAddresses                                 | Bool     | Helper flag for knowing if the company has email addresses present                        |
+| hasHyperlinks                                     | Bool     | Helper flag for knowing if the company has hyperlinks present                             |
+| hasIntelligence                                   | Bool     | Helper flag for knowing if the company has intelligence records present                   |
+| hasStatus                                         | Bool     | Helper flag for knowing if the company has status records present                         |
+| hasBankAccounts                                   | Bool     | Helper flag for knowing if the company has bank accounts present                          |
+| hasAddresses                                      | Bool     | Helper flag for knowing if the company has addresses present                              |
+| hasDocuments                                      | Bool     | Helper flag for knowing if the company has documents present                              |
+| hasStock                                          | Bool     | Helper flag for knowing if the company has stock data present                             |
+| hasLEI                                            | Bool     | Helper flag for knowing if the company has LEI information present                        |
+| hasECParticipant                                  | Bool     | Helper flag for knowing if the company has EU participant information present             |
+| hasFranchisesOrLicences                           | Bool     | Helper flag for knowing if the company has franchises or licences present                 |
 
 ## Unix time only
 
