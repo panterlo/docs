@@ -196,6 +196,13 @@
         "api-industry/icastatistics/extra-dividends",
         "api-industry/icastatistics/winter-destinations"
       ]
+    },
+    {
+      "group": "Sweden - Search",
+      "pages": [
+        "api-industry/search/search-se-reports",
+        "api-industry/search/search-se-reports-multi"
+      ]
     }
   ],
   "footerSocials": {
