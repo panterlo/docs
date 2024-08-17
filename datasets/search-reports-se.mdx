@@ -1,11 +1,11 @@
 ---
 title: 'Search in  financial reports'
-description: 'Lightning fast and ultra modern search management reports, audit report, financial reports'
+description: 'Lightning fast and ultra modern search for management reports, audit report and financial reports'
 mode: 'wide'
 ---
 
-With our search in financial reports you can search by text and data in management reports, details, comments, audit
-reports, foot notes and much more.
+With our search in financial reports you can search by text and data within management reports, audit
+reports, financial reports including comments, foot notes and much more.
 
 We provide an easy to use search API based on [Typesense](https://typesense.org) lightning-fast search database.
 That means that all features described in [Typesense API version 26](https://typesense.org/docs/26.0/api/) is available in our API.
@@ -14,7 +14,7 @@ Data is continously reindexed as new data arrives.
 Search index is stored on RAM memory meaning requests to our search serves very fast and you can use it for search-as-you-type,
 autocomplete and other applications.
 
-In search in financial reports you can query (query_by) based on a number fields listed in the next chapter.
+With our search in financial reports you can query (query_by) based on a number fields listed in the next chapter.
 
 The response is strongly typed and you will find the response model in the OpenAPI specification.
 
@@ -42,6 +42,14 @@ Examples on what you can query on:
 ## Fields indexed
 
 The following fields are currentley indexed in memory. These can be used in the query_by parameter.
+
+<Note>
+  Why are certain fields in Swedish ? While we interpret and index documents
+  there are both scanned reports and digital reports being in the format of
+  iXBRL. For digital reports we try to keep the local name of the element close
+  to the actual XBRL taxonomy. This makes it simpler to interpret the meaning of
+  the fields and give them metadata.{' '}
+</Note>
 
 | Field                                                                  | Type                                | Description                                                                             |
 | ---------------------------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------- |
@@ -91,6 +99,7 @@ The following fields are currentley indexed in memory. These can be used in the 
 | not.upplysningModerforetag                                             | String                              | NA                                                                                      |
 | not.andraLangfristigaVardepappersinnehav                               | String                              | NA                                                                                      |
 | not.vasentligaHandelserRakenskapsaretsSlut                             | String                              | NA                                                                                      |
+| not.checkrakningskreditKommentar                                       | String                              | NA                                                                                      |
 | harRevisor                                                             | bool                                | NA                                                                                      |
 | revisor.pateckningRevisionsberattelseEnligtStandardutformning          | String                              | NA                                                                                      |
 | revisor.andraKravLagForfattningAnmarkning                              | String                              | NA                                                                                      |
@@ -116,15 +125,15 @@ The following fields are currentley indexed in memory. These can be used in the 
 | reportAuditorMetaTag                                                   | String                              | NA                                                                                      |
 | auditorSoftwareMetaTag                                                 | String                              | NA                                                                                      |
 | auditorSoftwareVersionMetaTag                                          | String                              | NA                                                                                      |
-| AuditorApplicationName                                                 | String                              | NA                                                                                      |
+| auditorApplicationName                                                 | String                              | NA                                                                                      |
 | auditorReportHashMetaTag                                               | String                              | NA                                                                                      |
 | auditorOriginatorMetaTag                                               | String                              | NA                                                                                      |
 
 ## Examples
 
-We have put togheter a few example of how you can use search in financial reports to easy find relative data.
+We have put togheter a few example of how you can use search in financial reports to easy find data.
 
-### Search for financial reports audited by a specific auditor
+### Search for financial reports audited by a specific audit company
 
 ```bash cURL
 curl https://api.tic.io/search/companies/reports/se
@@ -224,13 +233,13 @@ key=your_api_key
 
 ### Search for financial reports with remarks (second)
 
-There are multiple ways to search for remarks. One way is looking at the field: "andraKravLagForfattningAnmarkning".
-Second example will show another way.
+There are multiple ways to search for remarks. This example look for words in the "grundUttalanden" containing
+the statements from the auditor.
 
 ```bash cURL
 curl https://api.tic.io/search/companies/reports/se
 q=felaktigt&
-query_by=skatt&query_by=revisor.grundUttalanden&
+query_by=revisor.grundUttalanden&
 key=your_api_key
 {
     "facet_counts": [],
