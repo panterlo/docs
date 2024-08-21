@@ -80,11 +80,15 @@ limit your search result by using filter_by on ALL fields.
 | documents.documentTitle                           | String   | Title of the document                                                                     |
 | documents.documentVersion                         | String   | Version of the document                                                                   |
 | intelligence.companyIntelligenceType              | Int32    | The specific enum (int) that you want to query by                                         |
+| intelligence.companyIntelligenceSubType           | String   | A text enum describing the sub-type of the intelligence type (see documentation)          |
 | intelligence.notes                                | String   | The description of the discrepancy                                                        |
+| intelligence.score                                | Int32    | A score rank between 0-255 where 0 means only for information and 255 is a serious mark   |
+| intelligence.externalId                           | Int32    | A reference for the intelligence type used to find the associated underlying document     |
 | mostRecentAnnualReportOverview.annualReportPeriod | Int32    | The endpoint report of the annual report in YYYYMM as Int32                               |
 | mostRecentAnnualReportOverview.netSales           | Int32    | Net sales i K/1000 in currency for the most recent annual report                          |
 | mostRecentAnnualReportOverview.operatingProfit    | Int32    | Operating profit i K/1000 in currency for the most recent annual report                   |
 | mostRecentAnnualReportOverview.profitForTheYear   | Int32    | Profit for the year K/1000 in currency for the most recent annual report                  |
+| mostRecentAnnualReportOverview.totalAssets        | Int32    | Total assets in balance sheet K/1000 in currency for the most recent annual report        |
 | mostRecentAnnualReportOverview.grossMargin        | Int32    | Profit for the year K/1000 in currency for the most recent annual report                  |
 | mostRecentAnnualReportOverview.operatingMargin    | Float    | Operating margin for the most recent annual report                                        |
 | mostRecentAnnualReportOverview.netProfitMargin    | Float    | Net profit margin for the most recent annual report                                       |
@@ -156,6 +160,56 @@ When duplication is identified by REA (Research Executive Agency), the validity 
 
 **Blocked**
 Blocked during the validation process by REA (Research Executive Agency).
+
+## Intelligence types
+
+Intelligence records contains information about various discrepancies that we find in data. A record contains a score between 0 and 255
+representing the significance of the discrepancy. If the score equals 0 is means it's just for information while 255 means the discrepancy
+is very significant. Each intelligence record also comes with a human English text describing the discrepancy called intelligence.notes.
+
+List of intelligence.companyIntelligenceType below in the table. Please note that while searching you need to enter the value (Int32) and not the name itself. Value
+2,4 and 6 are unused currentley. They may appear in search result currentley just for testing.
+
+| Enum                         | Value | Description                                                |
+| ---------------------------- | ----- | ---------------------------------------------------------- |
+| CreatedAsShelfCompany        | 0     | The company was created as shelf company                   |
+| SuspectedForQuickLiquidation | 1     | The company was seems to be going into "quick liquidation" |
+| AffliatedWithArticle         | 3     | The company is affiliated with one or multiple articles    |
+| SuspectedAddress             | 5     | The address has earlier been known                         |
+| PresentOnWarningList         | 7     | The company is present on certain warning lists            |
+| AnnualReportDiscrepancies    | 8     | One or multiple annual reports contains discrepancies      |
+
+The intelligence.externalId is used to reference an id containing the orgin of the intelligence record. If for example the
+intelligence record is of type: AnnualReportDiscrepancies (8) it means the external id represents the id of the annual report.
+
+## Intelligence subtypes
+
+Certain intelligence types have subtypes to further describe what has been found. The intelligence.companyIntelligenceSubType is
+an enum text to make it easier to filter based on search.
+
+List of subtypes. Please note you need to filter by string when using intelligence.companyIntelligenceSubType.
+
+| Enum                    | Description                                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------------------------- |
+| BS_MISMATCH             | The balance sheet doesn't balance                                                                     |
+| AGM_TO_LATE             | The annual general meeting was held to late                                                           |
+| AR_TO_LATE              | The annual report was submitted to late                                                               |
+| AGM_WRONG_DATE          | Suspected wrong date of annual general meeting date                                                   |
+| MISSING_MULTIYEAR       | The multi-year overview is missing                                                                    |
+| MISSING_CHANGEEQUITY    | The table showing change of equity is missing                                                         |
+| WRONG_SIGNATUREDATE     | Signature date (last signature) seems to be wrong                                                     |
+| WRONG_EQUITYASSETSRATIO | The given equity asset ratio doesn't match the calculation                                            |
+| MISSING_AUDITOR         | The company is passing the thresholds requiring an auditor (check response for mandatory requirement) |
+| DUPLICATE               | The annual report is a duplicate for another company                                                  |
+| TAX_PAID_LATE           | Taxes have been paid late                                                                             |
+| FORBIDDEN_LOAN          | A forbidden loan exists                                                                               |
+| BS_DISCOURGED           | Auditor has discourged the balance sheet                                                              |
+| BS_CONTROL              | A control balance sheet exists                                                                        |
+| TAX_AUDIT               | A tax audit has been carried out                                                                      |
+| SUM_INCORRECT           | Various sum records are incorrect                                                                     |
+| AUDITOR_REMARKS         | Auditor remarks exists                                                                                |
+
+Check back contiously since we are adding more subtypes.
 
 ## Examples
 
@@ -248,6 +302,19 @@ query_by=stock.marketExchangeName&
 key=your_api_key
 ```
 
+### Search for intelligence records
+
+Searches for companies that have passed auditor requirements by third consecutive year. Note that the score should exceed 254.
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=*&
+query_by=registrationNumber&
+filter_by=intelligence.companyIntelligenceSubType:['MISSING_AUDITOR']&&
+intelligence.score:>254
+key=your_api_key
+```
+
 ### Multi search
 
 Multi search enables you to carry out multi searches in one request by posting a json model to the search endpoint. Typesense have a description of the feature in their [documentation](https://typesense.org/docs/26.0/api/federated-multi-search.html).
@@ -304,29 +371,29 @@ The search response for example when you search for our company would look like 
   "hits": [
     {
       "document": {
-        "id": "2780399",
-        "companyId": 2780399,
+        "id": "2806917",
+        "companyId": 2806917,
         "iso3166CountryCode": "SE",
-        "registrationNumber": "5568057029",
+        "registrationNumber": "5567881825",
         "legalEntityType": "Aktiebolag",
-        "registrationDate": 1271721600,
-        "mostRecentPurpose": "Bolaget ska bedriva verksamhet med utveckling, tillverkning och försäljning av elektroniska produkter inom områdena elektrisk energi och elektrisk mätteknik samt bedriva konsultverksamhet inom nämnda områden, ävensom bedriva annan därmed förenlig verksamhet.",
+        "registrationDate": 1251763200,
+        "mostRecentPurpose": "Föremålet för bolagets verksamhet är att bedriva utveckling, produktion och försäljning av resurseffektiva fordonslösningar för transportsektorn samt därmed förenlig verksamhet.",
         "names": [
           {
-            "nameOrIdentifier": "Ferroamp Ab (Publ)",
+            "nameOrIdentifier": "Clean Motion AB",
             "companyNamingType": "legalName",
-            "firstSeenAt": 1713544993
+            "firstSeenAt": 1708173345
           }
         ],
         "phoneNumbers": [
           {
-            "e164PhoneNumber": "+46868433390",
+            "e164PhoneNumber": "+4630210148",
             "phoneNumberType": "fixedLine",
-            "numberPlanServiceType": "Fasta telefonitjänster 08,031,040",
-            "orginalOperator": "Tele2 Sverige AB",
-            "priorOperator": "Tele2 Sverige AB",
-            "currentOperator": "TelaVox AB",
-            "lastPortingDate": 1586304000
+            "numberPlanServiceType": "Fasta telefonitjänster",
+            "orginalOperator": "Telia Sverige AB",
+            "priorOperator": null,
+            "currentOperator": "Telia Sverige AB",
+            "lastPortingDate": null
           }
         ],
         "hasPhoneNumbers": true,
@@ -334,19 +401,15 @@ The search response for example when you search for our company would look like 
         "hasEmailAddresses": false,
         "hyperlinks": [
           {
-            "hyperlink": "https://ferroamp.com/",
+            "hyperlink": "https://cleanmotion.se/",
             "hyperlinkType": "homepage"
           }
         ],
         "hasHyperlinks": true,
         "sniCodes": [
           {
-            "sni_2007Code": "46141",
-            "sni_2007Name": "Provisionshandel med maskiner, industriell utrustning, fartyg och luftfartyg utom kontorsutrustning och datorer"
-          },
-          {
-            "sni_2007Code": "71123",
-            "sni_2007Name": "Teknisk konsultverksamhet inom elteknik"
+            "sni_2007Code": "29101",
+            "sni_2007Name": "Tillverkning av personbilar och andra lätta motorfordon"
           }
         ],
         "intelligence": [],
@@ -354,18 +417,24 @@ The search response for example when you search for our company would look like 
         "status": [],
         "hasStatus": false,
         "mostRecentAnnualReportOverview": {
-          "annualReportPeriod": 202212,
-          "netSales": 205112,
-          "operatingProfit": -54106,
-          "profitForTheYear": -54262,
-          "grossMargin": 18.52,
-          "operatingMargin": -26.38,
-          "netProfitMargin": -26.45,
-          "equityAssetsRatio": 68.33,
-          "quickRatio": 166.51,
-          "netSalesChange": 86.1,
-          "numberOfEmployees": 61
+          "ruleset": "K3",
+          "formatDescription": "Årsredovisning med kostnadsslagsindelad resultaträkning och balansräkning",
+          "periodStart": 202301,
+          "periodEnd": 202312,
+          "totalAssets": 49579,
+          "annualReportPeriod": 202312,
+          "netSales": 7583,
+          "operatingProfit": -6773,
+          "profitForTheYear": -6895,
+          "grossMargin": 17.55,
+          "operatingMargin": -89.32,
+          "netProfitMargin": -90.94,
+          "equityAssetsRatio": 81.57,
+          "quickRatio": 31.36,
+          "netSalesChange": 90.77,
+          "numberOfEmployees": 13
         },
+        "hasMostRecentAnnualReportOverview": true,
         "isRegisteredForVAT": true,
         "isRegisteredForFTax": true,
         "isRegisteredForPayroll": true,
@@ -373,7 +442,7 @@ The search response for example when you search for our company would look like 
         "bankAccounts": [
           {
             "bankAccountType": "bankgiro",
-            "accountNumber": "6145767",
+            "accountNumber": "4098208",
             "swift_BIC": null
           }
         ],
@@ -382,45 +451,32 @@ The search response for example when you search for our company would look like 
           {
             "addressType": "mailAddress",
             "co": null,
-            "street": "Bergtorpsvägen",
-            "houseNumber": "43B",
-            "postalCode": "18364",
-            "city": "Näsbypark",
+            "street": "Fabriksstråket",
+            "houseNumber": "4",
+            "postalCode": "43376",
+            "city": "Jonsered",
             "countryCodeAlpha3": "SWE",
-            "location": [59.44228, 18.09534]
+            "location": [57.74957, 12.17803]
           },
           {
-            "addressType": "visitingAddress",
+            "addressType": "mailAddress",
             "co": null,
-            "street": "Odlingsgatan",
-            "houseNumber": "7B",
-            "postalCode": "17453",
-            "city": "Hallonbergen",
+            "street": "Strandvägen",
+            "houseNumber": "12",
+            "postalCode": "44332",
+            "city": "Lerum",
             "countryCodeAlpha3": "SWE",
-            "location": [59.37769, 17.96887]
+            "location": [57.77231, 12.24702]
           }
         ],
         "hasAddresses": true,
         "documents": [
           {
-            "companyDocumentId": 8557073,
+            "companyDocumentId": 8583401,
             "companyDocumentType": null,
             "documentDate": 1716336000,
-            "documentTitle": "Årsredovisning",
-            "documentVersion": null,
-            "documentValue1": null,
-            "documentValue2": null,
-            "documentValue3": null,
-            "data": {
-              "Mottagen hos Bolagsverket datum": "20240522"
-            }
-          },
-          {
-            "companyDocumentId": 8557074,
-            "companyDocumentType": null,
-            "documentDate": 1716336000,
-            "documentTitle": "Bemyndigande om ökning av aktiekapitalet genom nyemission",
-            "documentVersion": "2024/281149",
+            "documentTitle": "Ökning av aktiekapitalet genom nyemission",
+            "documentVersion": "2024/278675",
             "documentValue1": null,
             "documentValue2": "NEW",
             "documentValue3": null,
@@ -431,55 +487,66 @@ The search response for example when you search for our company would look like 
         ],
         "hasDocuments": true,
         "stock": {
-          "isin": "SE0012229920",
-          "ticker": "FERRO",
-          "yahooSymbol": "FERRO.ST",
+          "isin": "SE0008216303",
+          "ticker": "CLEMO",
+          "yahooSymbol": "CLEMO.ST",
           "marketName": "First North",
           "marketExchangeName": "OMX Stockholm",
           "marketCountryCodeAlpha3": "SWE",
-          "sectorName": "Industri",
-          "branchName": "Energi & Återvinning",
-          "listingDate": 1553212800,
-          "enterpriseValue": 279.22,
-          "enterpriseValueUpdated": 1722663064,
-          "stockQuote": 8.11,
-          "stockQuoteUpdated": 1722663015,
-          "nextReportDate": 1730937600,
+          "sectorName": "Sällanköpsvaror",
+          "branchName": "Bil & Motor",
+          "listingDate": 1464220800,
+          "enterpriseValue": 75.67,
+          "enterpriseValueUpdated": 1724131851,
+          "stockQuote": 1.07,
+          "stockQuoteUpdated": 1724175908,
+          "nextReportDate": 1724284800,
           "nextReportType": "INTERIM",
-          "dividendExDate": 1715904000,
+          "dividendExDate": 1715817600,
           "dividendsPerYear": 1,
           "dividendAmount": 0.0,
           "dividendCurrency": "SEK"
         },
         "hasStock": true,
         "lei": {
-          "leiCode": "549300RS7OQHGNOP2H55",
+          "leiCode": "549300C5LE1I3GKLNB17",
           "registrationStatus": "ISSUED",
-          "initialRegistrationDate": 1549470720,
-          "nextRenewalDate": 1748519142,
+          "initialRegistrationDate": 1493093340,
+          "nextRenewalDate": 1730276640,
           "managingLOU": "549300O897ZC5H7CY412",
           "managingLOULegalName": "Nordic Legal Entity Identifier AB"
         },
         "hasLEI": true,
         "ecParticipant": {
-          "pic": "934799283",
+          "pic": "951153289",
           "validationStatus": "Validated",
-          "numberOfProjects": 4,
+          "numberOfProjects": 1,
           "workProgrammesData": [
             {
-              "key": "H2020",
-              "value": 4
+              "key": "HORIZON",
+              "value": 1
             }
           ],
-          "lastUpdated": 1722698706
+          "lastUpdated": 1723514583
         },
         "hasECParticipant": true,
         "franchisesOrLicences": [],
         "hasFranchisesOrLicences": false
       },
-      "highlight": {},
-      "highlights": [],
-      "text_match": 578730123365712000.0,
+      "highlight": {
+        "registrationNumber": {
+          "matched_tokens": ["5567881825"],
+          "snippet": "<mark>5567881825</mark>"
+        }
+      },
+      "highlights": [
+        {
+          "field": "registrationNumber",
+          "matched_tokens": ["5567881825"],
+          "snippet": "<mark>5567881825</mark>"
+        }
+      ],
+      "text_match": 578730123365711993.0,
       "text_match_info": {
         "best_field_score": "1108091339008",
         "best_field_weight": 15,
@@ -491,15 +558,15 @@ The search response for example when you search for our company would look like 
       }
     }
   ],
-  "out_of": 882480,
+  "out_of": 903139,
   "page": 1,
   "request_params": {
-    "collection_name": "companies_20240804",
-    "first_q": "934799283",
+    "collection_name": "companies_20240820",
+    "first_q": "5567881825",
     "per_page": 10,
-    "q": "934799283"
+    "q": "5567881825"
   },
   "search_cutoff": false,
-  "search_time_ms": 10
+  "search_time_ms": 0
 }
 ```
