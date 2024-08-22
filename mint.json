@@ -146,7 +146,14 @@
         "api-core/accounts/details",
         "api-core/accounts/create",
         "api-core/accounts/edit",
-        "api-core/accounts/delete"
+        "api-core/accounts/delete",
+        "api-core/accounts/companies",
+        "api-core/accounts/add-companies",
+        "api-core/accounts/delete-company",
+        "api-core/accounts/edit-company",
+        "api-core/accounts/default",
+        "api-core/accounts/set-default",
+        "api-core/accounts/folders"
       ]
     },
     {
