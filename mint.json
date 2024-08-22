@@ -93,6 +93,18 @@
       ]
     },
     {
+      "group": "Financial Documents",
+      "pages": [
+        "api-core/financial-documents/financial-documents-se",
+        "api-core/financial-documents/financial-documents-se-report-pdf",
+        "api-core/financial-documents/financial-documents-se-report-xbrl",
+        "api-core/financial-documents/financial-documents-se-report-ixbrl",
+        "api-core/financial-documents/financial-documents-se-audit-pdf",
+        "api-core/financial-documents/financial-documents-se-audit-xbrl",
+        "api-core/financial-documents/financial-documents-se-audit-ixbrl"
+      ]
+    },
+    {
       "group": "Companies",
       "pages": [
         "api-core/companies/summary",

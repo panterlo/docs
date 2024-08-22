@@ -1,0 +1,59 @@
+---
+title: 'Documents'
+openapi: get /financial-documents/se/{financialDocumentId}
+---
+
+### Details
+
+This endpoint with the URL segment /se is for Sweden. Each region has it's own URL. With this endpoint you get information
+about which format exists of each document and various content.
+
+Please note that this endpoint is for fast retrieval from our distributed storage plattform. If you want to access the
+financial data that has been interpreted, calculated and run through our [AI Anomly Detection](/technology/ai-anomaly-detection) you
+should look in the intelligence, financial-summary and financial-reports endpoints.
+
+These endpoints are for downloading and showing users financial reports or for your own custom solutions.
+
+### Response and example
+
+This endpoint with the URL segment /se is for Sweden. Each region has it's own URL. With this endpoint you get information
+about which documents exists.
+
+```json Example response
+{
+    "companyName": "Clean Motion AB",
+    "registrationNumber": 5567881825,
+    "arrivalDate": "2024-06-19T00:00:00",
+    "ruleset": "K3",
+    "code": "risbs",
+    "formatDescription": "Årsredovisning med resultaträkning och balansräkning",
+    "periodStart": "2023-01-01T00:00:00",
+    "periodEnd": "2023-12-31T00:00:00",
+    "annualGeneralMeetingDate": "2024-04-24T00:00:00",
+    "lastSignatureDate": "2024-04-24T00:00:00",
+    "auditorFullName": "XXX;Auktoriserad revisor",
+    "auditCompanyName": "BDO Göteborg AB",
+    "hasReportXBRL": true,
+    "hasReportiXBRL": true,
+    "hasReportPDF": true,
+    "hasReportAuditXBRL": true,
+    "hasReportAuditiXBRL": true,
+    "hasReportAuditPDF": false,
+    "reportSoftwareMetaTag": "Wolters Kluwer Capego",
+    "reportSoftwareVersionMetaTag": "2024.6",
+    "reportApplicationName": null,
+    "reportAuditReportHashMetaTag": "4476f78f4b88d903e3168312f884d09b9362461dd01fada4aece2be48028b1d6",
+    "reportOriginatorMetaTag": null,
+    "reportAuditorMetaTag": null,
+    "auditorSoftwareMetaTag": "Hogia AuditReport",
+    "auditorSoftwareVersionMetaTag": "auditReport 2023.02",
+    "auditorApplicationName": "Hogia IxbrlService 2.215.85.0",
+    "auditorReportHashMetaTag": null,
+    "auditorOriginatorMetaTag": null,
+    "bolagsverketCaseRegistrationDate": "2024-06-19T12:12:01",
+    "bolagsverketCaseId": 9358316,
+    "bolagsverketCaseYear": 2024,
+    "bolagsverketNotificationDate": "2024-06-19T00:00:00"
+}
+}
+```

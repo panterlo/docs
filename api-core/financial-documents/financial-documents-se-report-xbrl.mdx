@@ -1,0 +1,12 @@
+---
+title: 'Report XBRL'
+openapi: get /financial-documents/se/{financialDocumentId}/xbrl
+---
+
+### Details
+
+This will return the report in a XBRL format inline with the browser e.g it will
+open the browser PDF viewer (XML). To force a download you can use querystring inline=false.
+
+Used by users wanting to process raw compact information not used to visualize data
+directly.

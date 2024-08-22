@@ -1,0 +1,17 @@
+---
+title: 'Report iXBRL'
+openapi: get /financial-documents/se/{financialDocumentId}/ixbrl
+---
+
+### Details
+
+This will return the report in a XHTML (iXBRL) format inline with the browser.
+To force a download you can use querystring inline=false.
+
+Please note that if no iXBRL document is available you will get 404 - Not found.
+
+iXBRL is a format that combines tradional HTML with XML elements from the XBRL standard.
+It works fine for user experiences where you don't want a PDF viewer to open.
+
+You can also use this document if you want to provide your own processing of the
+financial data.

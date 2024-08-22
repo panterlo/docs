@@ -1,0 +1,14 @@
+---
+title: 'Report PDF'
+openapi: get /financial-documents/se/{financialDocumentId}/pdf
+---
+
+### Details
+
+This will return the report in a PDF format inline with the browser e.g it will
+open the browser PDF viewer. To force a download you can use querystring inline=false.
+
+It the financial report was scanned it has been going through TIC IDP solution which
+means we try to increase visiblity and make the document searchable (PDF freetext search).
+
+Embedded in the PDF you will find hOCR data.
