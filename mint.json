@@ -96,6 +96,8 @@
       "group": "Companies",
       "pages": [
         "api-core/companies/summary",
+        "api-core/companies/financial-summary",
+        "api-core/companies/financial-reports",
         "api-core/companies/ownerships",
         "api-core/companies/bank-accounts",
         "api-core/companies/sni-codes",
@@ -113,8 +115,7 @@
         "api-core/companies/trademarks",
         "api-core/companies/registered-offices",
         "api-core/companies/status",
-        "api-core/companies/domains",
-        "api-core/companies/annual-reports"
+        "api-core/companies/domains"
       ]
     },
     {

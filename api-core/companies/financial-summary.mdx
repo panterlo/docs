@@ -1,0 +1,33 @@
+---
+openapi: get /datasets/companies/{companyId}/financial-summary
+---
+
+### Details
+
+This endpoint will return a financial summary for the last four years. Properties are prefixed to give a sense where
+they are placed in the financial report.
+
+| Prefix | Description  |
+| ------ | ------------ |
+| rs     | Resultsheet  |
+| bs     | Balancesheet |
+| fn     | Footnote     |
+| km     | Key metrics  |
+
+### Key metrics
+
+The keymetrics are calculated according to the following.
+
+| Prefix               | Description                                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| km_OperatingMargin   | Operating profit/loss divided by net sales                                                                      |
+| km_NetProfitMargin   | Net sales plus other operating income divided by profit before financial items                                  |
+| km_EquityAssetsRatio | Sum equity plus adjusted equity (sum untaxed reserves deducated with the corporate tax) divided by total assets |
+| km_GrossMargin       | Gross profit/loss divided by net sales                                                                          |
+
+Changes to calulcation may occur since different actors are interpreting data differently for km_NetProfitMargin.
+
+### Go deeper
+
+To access all records of the financial report you should use the endpoint for [annual-reports](annual-reports) that gives you
+a ready to use table structure with localized names for the financial report.
