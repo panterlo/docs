@@ -55,6 +55,9 @@ List of subtypes. Please note you need to filter by string when using intelligen
 | TAX_AUDIT               | A tax audit has been carried out                                                                      |
 | SUM_INCORRECT           | Various sum records are incorrect                                                                     |
 | AUDITOR_REMARKS         | Auditor remarks exists                                                                                |
+| BS_MISSING              | Balance sheet missing                                                                                 |
+| RS_MISSING              | Result sheet missing                                                                                  |
+| DATA_MISSING            | Required data is missing                                                                              |
 
 Check back contiously since we are adding more subtypes.
 
@@ -68,7 +71,9 @@ data for intelligence record.
   {
     "companyIntelligenceType": "annualReportDiscrepancies",
     "companyIntelligenceSubType": "MISSING_MULTIYEAR",
-    "notes": "The annual report is missing a multi-year overview and the first fiscal year has passed. Required by the ruleset company is using.",
+    "notes": "The annual report is missing a multi-year overview
+    and the first fiscal year has passed.
+    Required by the ruleset company is using.",
     "score": 50,
     "firstSeenAtUtc": "2024-07-22T00:00:00",
     "lastSeenAtUtc": null,
@@ -79,7 +84,8 @@ data for intelligence record.
   {
     "companyIntelligenceType": "annualReportDiscrepancies",
     "companyIntelligenceSubType": "MISSING_CHANGEEQUITY",
-    "notes": "The annual report is missing changes in equity. Required by the ruleset company is using.",
+    "notes": "The annual report is missing changes in equity.
+    Required by the ruleset company is using.",
     "score": 100,
     "firstSeenAtUtc": "2024-07-22T00:00:00",
     "lastSeenAtUtc": null,
