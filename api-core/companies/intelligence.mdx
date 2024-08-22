@@ -1,0 +1,91 @@
+---
+title: 'Intelligence'
+openapi: get /datasets/companies/{companyId}/intelligence
+---
+
+### Details
+
+This endpoint will return all historical and current intelligence records for a business. Intelligence records are part of
+our [AI Anomaly Detection](/technology/ai-anomaly-detection) which highlights discrepancies in data and their significance.
+
+## Intelligence types
+
+Intelligence records contains information about various discrepancies that we find in data. A record contains a score between 0 and 255
+representing the significance of the discrepancy. If the score equals 0 is means it's just for information while 255 means the discrepancy
+is very significant. Each intelligence record also comes with a human English text describing the discrepancy called intelligence.notes.
+
+List of intelligence.companyIntelligenceType below in the table. Please note that while searching you need to enter the value (Int32) and not the name itself. Value
+2,4 and 6 are unused currentley. They may appear in search result currentley just for testing.
+
+| Enum                         | Value | Description                                                |
+| ---------------------------- | ----- | ---------------------------------------------------------- |
+| CreatedAsShelfCompany        | 0     | The company was created as shelf company                   |
+| SuspectedForQuickLiquidation | 1     | The company was seems to be going into "quick liquidation" |
+| AffliatedWithArticle         | 3     | The company is affiliated with one or multiple articles    |
+| SuspectedAddress             | 5     | The address has earlier been known                         |
+| PresentOnWarningList         | 7     | The company is present on certain warning lists            |
+| AnnualReportDiscrepancies    | 8     | One or multiple annual reports contains discrepancies      |
+
+The intelligence.externalId is used to reference an id containing the orgin of the intelligence record. If for example the
+intelligence record is of type: AnnualReportDiscrepancies (8) it means the external id represents the id of the annual report.
+
+## Intelligence subtypes
+
+Certain intelligence types have subtypes to further describe what has been found. The intelligence.companyIntelligenceSubType is
+an enum text to make it easier to filter based on search.
+
+List of subtypes. Please note you need to filter by string when using intelligence.companyIntelligenceSubType.
+
+| Enum                    | Description                                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------------------------- |
+| BS_MISMATCH             | The balance sheet doesn't balance                                                                     |
+| AGM_TO_LATE             | The annual general meeting was held to late                                                           |
+| AR_TO_LATE              | The annual report was submitted to late                                                               |
+| AGM_WRONG_DATE          | Suspected wrong date of annual general meeting date                                                   |
+| MISSING_MULTIYEAR       | The multi-year overview is missing                                                                    |
+| MISSING_CHANGEEQUITY    | The table showing change of equity is missing                                                         |
+| WRONG_SIGNATUREDATE     | Signature date (last signature) seems to be wrong                                                     |
+| WRONG_EQUITYASSETSRATIO | The given equity asset ratio doesn't match the calculation                                            |
+| MISSING_AUDITOR         | The company is passing the thresholds requiring an auditor (check response for mandatory requirement) |
+| DUPLICATE               | The annual report is a duplicate for another company                                                  |
+| TAX_PAID_LATE           | Taxes have been paid late                                                                             |
+| FORBIDDEN_LOAN          | A forbidden loan exists                                                                               |
+| BS_DISCOURGED           | Auditor has discourged the balance sheet                                                              |
+| BS_CONTROL              | A control balance sheet exists                                                                        |
+| TAX_AUDIT               | A tax audit has been carried out                                                                      |
+| SUM_INCORRECT           | Various sum records are incorrect                                                                     |
+| AUDITOR_REMARKS         | Auditor remarks exists                                                                                |
+
+Check back contiously since we are adding more subtypes.
+
+### Response and example
+
+This is an example response. Note that you are also getting a source url if it exists which enables you to grab the underlying
+data for intelligence record.
+
+```json Example response
+[
+  {
+    "companyIntelligenceType": "annualReportDiscrepancies",
+    "companyIntelligenceSubType": "MISSING_MULTIYEAR",
+    "notes": "The annual report is missing a multi-year overview and the first fiscal year has passed. Required by the ruleset company is using.",
+    "score": 50,
+    "firstSeenAtUtc": "2024-07-22T00:00:00",
+    "lastSeenAtUtc": null,
+    "lastUpdatedAtUtc": "2024-08-20T15:49:50",
+    "externalId": 469448,
+    "sourceUrl": "https://api.tic.io/financial-documents/se/469448"
+  },
+  {
+    "companyIntelligenceType": "annualReportDiscrepancies",
+    "companyIntelligenceSubType": "MISSING_CHANGEEQUITY",
+    "notes": "The annual report is missing changes in equity. Required by the ruleset company is using.",
+    "score": 100,
+    "firstSeenAtUtc": "2024-07-22T00:00:00",
+    "lastSeenAtUtc": null,
+    "lastUpdatedAtUtc": "2024-08-20T15:49:50",
+    "externalId": 469448,
+    "sourceUrl": "https://api.tic.io/financial-documents/se/469448"
+  }
+]
+```

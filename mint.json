@@ -110,6 +110,7 @@
         "api-core/companies/summary",
         "api-core/companies/financial-summary",
         "api-core/companies/financial-reports",
+        "api-core/companies/intelligence",
         "api-core/companies/ownerships",
         "api-core/companies/bank-accounts",
         "api-core/companies/sni-codes",
