@@ -1,0 +1,46 @@
+---
+title: 'Bolagsverket Financial Reports monthly'
+openapi: get /statistics/se/bolagsverket/financial-reports/monthly
+---
+
+### Details
+
+This endpoint delivers monthly statistics about registered financial reports (annual and interim reports)
+at Bolagsverket (The Swedish companies registration office). Updates occur after 00:00 each day in the
+week.
+
+### Response Model (Jagged Arrays)
+
+The response model is compact to deliver ultra low response times. Data is only stored in RAM memory. Therefore
+the data is supplied in what's called jagged arrays. A jagged array is sometimes called an "array of arrays."
+
+#### eReports
+
+This contains the registered electronic financial reports. The format is an array of arrays with the type [Int32,Int32]
+with the first representing YYMDD (e.g year and month note that year is only given in two digits eg. 2024 = 24, 2025 = 25). The second
+represent the number of reports registered for the date.
+
+#### pReports
+
+This contains the number of registered paper (scanned) financial reports. Each element in the array is of type [Int32,Int32]
+with the first representing YYMM (e.g year and month note that year is only given in two digits eg. 2024 = 24, 2025 = 25). The second
+represent the number of reports registered for the date.
+
+#### softwareEnum
+
+This is a dictionary of all given listed software used in the statistics of electronic registered financial reports. The
+key in the dictionary is used in the softwareUsed property.
+
+#### softwareUsed
+
+This contains software used for electronic financial reports per day. The format is an array of arrays with the type
+[Int32, Int32, Int32]. with the first representing YYMM (e.g year and month note that year is only given in two digits eg. 2024 = 24, 2025 = 25).
+The second the key fo the dictionary for the softwareEnum. The third part represents the number of reports of reports
+registered for the date.
+
+### intelligence
+
+This contains the number of discrepancies we are finding in the registered financial reports for the same day.
+The format is an array of arrays with the type [Int32,Int32] with the first representing YYMM
+(e.g year and month note that year is only given in two digits eg. 2024 = 24, 2025 = 25). The second represent the number of discrepancies
+found for the same date as the registered financial report.

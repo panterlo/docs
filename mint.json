@@ -44,6 +44,10 @@
     {
       "name": "IDP API Reference",
       "url": "api-idp"
+    },
+    {
+      "name": "Statistics",
+      "url": "api-statistics"
     }
   ],
   "anchors": [
@@ -66,7 +70,13 @@
     },
     {
       "group": "Get Started",
-      "pages": ["authentication", "generate-client", "throttling", "search"]
+      "pages": [
+        "authentication",
+        "generate-client",
+        "throttling",
+        "search",
+        "datasets/search-reports-se"
+      ]
     },
     {
       "group": "Core Datasets",
@@ -75,7 +85,6 @@
     {
       "group": "Industry Datasets",
       "pages": [
-        "datasets/search-reports-se",
         "datasets/europeancommission",
         "datasets/finansinspektionen",
         "datasets/ica"
@@ -90,6 +99,13 @@
       "pages": [
         "api-core/searchcompanies/search-companies",
         "api-core/searchcompanies/search-companies-multi"
+      ]
+    },
+    {
+      "group": "Statistics",
+      "pages": [
+        "api-statistics/bolagsverket/financial-reports-daily",
+        "api-statistics/bolagsverket/financial-reports-monthly"
       ]
     },
     {
