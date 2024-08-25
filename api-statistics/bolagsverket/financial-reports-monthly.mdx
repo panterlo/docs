@@ -41,6 +41,7 @@ registered for the date.
 ### intelligence
 
 This contains the number of discrepancies we are finding in the registered financial reports for the same day.
-The format is an array of arrays with the type [Int32,Int32] with the first representing YYMM
+The format is an array of arrays with the type [Float,Float,Float] with the first representing YYMM
 (e.g year and month note that year is only given in two digits eg. 2024 = 24, 2025 = 25). The second represent the number of discrepancies
-found for the same date as the registered financial report.
+found for the same date as the registered financial report. The third represents the percentage of found
+discrepancies compared to the same days registered financial reports.

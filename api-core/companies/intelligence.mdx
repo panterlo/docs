@@ -15,7 +15,7 @@ representing the significance of the discrepancy. If the score equals 0 is means
 is very significant. Each intelligence record also comes with a human English text describing the discrepancy called intelligence.notes.
 
 List of intelligence.companyIntelligenceType below in the table. Please note that while searching you need to enter the value (Int32) and not the name itself. Value
-2,4 and 6 are unused currentley. They may appear in search result currentley just for testing.
+2,4 and 6 are unused currently. They may appear in search result currently just for testing.
 
 | Enum                         | Value | Description                                                |
 | ---------------------------- | ----- | ---------------------------------------------------------- |
@@ -26,7 +26,7 @@ List of intelligence.companyIntelligenceType below in the table. Please note tha
 | PresentOnWarningList         | 7     | The company is present on certain warning lists            |
 | AnnualReportDiscrepancies    | 8     | One or multiple annual reports contains discrepancies      |
 
-The intelligence.externalId is used to reference an id containing the orgin of the intelligence record. If for example the
+The intelligence.externalId is used to reference an id containing the origin of the intelligence record. If for example the
 intelligence record is of type: AnnualReportDiscrepancies (8) it means the external id represents the id of the annual report.
 
 ## Intelligence subtypes
@@ -48,18 +48,25 @@ List of subtypes. Please note you need to filter by string when using intelligen
 | WRONG_EQUITYASSETSRATIO | The given equity asset ratio doesn't match the calculation                                            |
 | MISSING_AUDITOR         | The company is passing the thresholds requiring an auditor (check response for mandatory requirement) |
 | DUPLICATE               | The annual report is a duplicate for another company                                                  |
+| NO_SHARECAPITAL         | The balance sheet is missing share capital                                                            |
+| POSSIBLE_MISSINGASSETS  |                                                                                                       |
+| NEGATIVE_SHARECAPITAL   | The balance sheet contains negative share capital                                                     |
+| NEGATIVE_ASSETS         | The balance sheet total assets are negative                                                           |
+| MISSING_BS_ASSETS       | Missing part of the balance sheet (assets)                                                            |
+| MISSING_BS_EQUITY       | Missing part of the balance sheet (equity)                                                            |
+| MISSING_RS              | Missing result sheet                                                                                  |
+| LIQUIDATION_REQUIRED    | The company is subject to liquidation requirements                                                    |
+| WRONG_SHARECAPITAL      | The share capital is wrong in the balance sheet                                                       |
+| MISSING_NUMBEREMPLOYEES | Missing number of employees but required                                                              |
 | TAX_PAID_LATE           | Taxes have been paid late                                                                             |
 | FORBIDDEN_LOAN          | A forbidden loan exists                                                                               |
-| BS_DISCOURGED           | Auditor has discourged the balance sheet                                                              |
+| BS_DISCOURGED           | Auditor has discouraged the balance sheet                                                             |
 | BS_CONTROL              | A control balance sheet exists                                                                        |
 | TAX_AUDIT               | A tax audit has been carried out                                                                      |
 | SUM_INCORRECT           | Various sum records are incorrect                                                                     |
 | AUDITOR_REMARKS         | Auditor remarks exists                                                                                |
-| BS_MISSING              | Balance sheet missing                                                                                 |
-| RS_MISSING              | Result sheet missing                                                                                  |
-| DATA_MISSING            | Required data is missing                                                                              |
 
-Check back contiously since we are adding more subtypes.
+Check back continuously since we are adding more subtypes.
 
 ### Response and example
 
