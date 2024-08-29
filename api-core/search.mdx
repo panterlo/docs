@@ -120,6 +120,12 @@ limit your search result by using filter_by on ALL fields.
 | franchisesOrLicences.linkedToName                        | String   | The name of the licencee or company providing the franchise                               |
 | franchisesOrLicences.actingUnderName                     | String   | The name/s under which the company is acting under                                        |
 | franchisesOrLicences.linkedToCompanyId                   | Int32    | The company id if exists for which the licence or franchise was given                     |
+| salesToPublicActors.actorName                            | String   | The name of the public actor                                                              |
+| salesToPublicActors.actorType                            | String   | The name of the public actor                                                              |
+| salesToPublicActors.actorCode                            | String   | The code of the actor, e.g municipality = municipality code                               |
+| salesToPublicActors.invoicedApprox2022K                  | Int      | Approx. amount of invoiced to the actor                                                   |
+| salesToPublicActors.invoicedApprox2023K                  | Int      | Approx. amount of invoiced to the actor (can be part of 2023)                             |
+| hasSalesToPublicActors                                   | Bool     | Helper flag for knowing if the company has sold to public actors                          |
 | hasPhoneNumbers                                          | Bool     | Helper flag for knowing if the company has phone numbers present                          |
 | hasEmailAddresses                                        | Bool     | Helper flag for knowing if the company has email addresses present                        |
 | hasHyperlinks                                            | Bool     | Helper flag for knowing if the company has hyperlinks present                             |
@@ -178,7 +184,7 @@ List of intelligence.companyIntelligenceType below in the table. Please note tha
 | PresentOnWarningList         | 7     | The company is present on certain warning lists            |
 | AnnualReportDiscrepancies    | 8     | One or multiple annual reports contains discrepancies      |
 
-The intelligence.externalId is used to reference an id containing the origin of the intelligence record. If for example the
+The intelligence.externalId is used to reference an id containing the orgin of the intelligence record. If for example the
 intelligence record is of type: AnnualReportDiscrepancies (8) it means the external id represents the id of the annual report.
 
 ## Intelligence subtypes
@@ -188,35 +194,49 @@ an enum text to make it easier to filter based on search.
 
 List of subtypes. Please note you need to filter by string when using intelligence.companyIntelligenceSubType.
 
-| Enum                    | Description                                                                                           |
-| ----------------------- | ----------------------------------------------------------------------------------------------------- |
-| BS_MISMATCH             | The balance sheet doesn't balance                                                                     |
-| AGM_TO_LATE             | The annual general meeting was held to late                                                           |
-| AR_TO_LATE              | The annual report was submitted to late                                                               |
-| AGM_WRONG_DATE          | Suspected wrong date of annual general meeting date                                                   |
-| MISSING_MULTIYEAR       | The multi-year overview is missing                                                                    |
-| MISSING_CHANGEEQUITY    | The table showing change of equity is missing                                                         |
-| WRONG_SIGNATUREDATE     | Signature date (last signature) seems to be wrong                                                     |
-| WRONG_EQUITYASSETSRATIO | The given equity asset ratio doesn't match the calculation                                            |
-| MISSING_AUDITOR         | The company is passing the thresholds requiring an auditor (check response for mandatory requirement) |
-| DUPLICATE               | The annual report is a duplicate for another company                                                  |
-| NO_SHARECAPITAL         | The balance sheet is missing share capital                                                            |
-| POSSIBLE_MISSINGASSETS  |                                                                                                       |
-| NEGATIVE_SHARECAPITAL   | The balance sheet contains negative share capital                                                     |
-| NEGATIVE_ASSETS         | The balance sheet total assets are negative                                                           |
-| MISSING_BS_ASSETS       | Missing part of the balance sheet (assets)                                                            |
-| MISSING_BS_EQUITY       | Missing part of the balance sheet (equity)                                                            |
-| MISSING_RS              | Missing result sheet                                                                                  |
-| LIQUIDATION_REQUIRED    | The company is subject to liquidation requirements                                                    |
-| WRONG_SHARECAPITAL      | The share capital is wrong in the balance sheet                                                       |
-| MISSING_NUMBEREMPLOYEES | Missing number of employees but required                                                              |
-| TAX_PAID_LATE           | Taxes have been paid late                                                                             |
-| FORBIDDEN_LOAN          | A forbidden loan exists                                                                               |
-| BS_DISCOURGED           | Auditor has discouraged the balance sheet                                                             |
-| BS_CONTROL              | A control balance sheet exists                                                                        |
-| TAX_AUDIT               | A tax audit has been carried out                                                                      |
-| SUM_INCORRECT           | Various sum records are incorrect                                                                     |
-| AUDITOR_REMARKS         | Auditor remarks exists                                                                                |
+| Enum                          | Description                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------- |
+| BS_MISMATCH                   | The balance sheet doesn't balance                                                                     |
+| AGM_TO_LATE                   | The annual general meeting was held to late                                                           |
+| AR_TO_LATE                    | The annual report was submitted to late                                                               |
+| AGM_WRONG_DATE                | Suspected wrong date of annual general meeting date                                                   |
+| MISSING_MULTIYEAR             | The multi-year overview is missing                                                                    |
+| MISSING_CHANGEEQUITY          | The table showing change of equity is missing                                                         |
+| WRONG_SIGNATUREDATE           | Signature date (last signature) seems to be wrong                                                     |
+| WRONG_EQUITYASSETSRATIO       | The given equity asset ratio doesn't match the calculation                                            |
+| MISSING_AUDITOR               | The company is passing the thresholds requiring an auditor (check response for mandatory requirement) |
+| DUPLICATE                     | The annual report is a duplicate for another company                                                  |
+| NO_SHARECAPITAL               | The balance sheet is missing share capital                                                            |
+| POSSIBLE_MISSINGASSETS        |                                                                                                       |
+| NEGATIVE_SHARECAPITAL         | The balance sheet contains negative share capital                                                     |
+| NEGATIVE_ASSETS               | The balance sheet total assets are negative                                                           |
+| MISSING_BS_ASSETS             | Missing part of the balance sheet (assets)                                                            |
+| MISSING_BS_EQUITY             | Missing part of the balance sheet (equity)                                                            |
+| MISSING_RS                    | Missing result sheet                                                                                  |
+| LIQUIDATION_REQUIRED          | The company is subject to liquidation requirements                                                    |
+| WRONG_SHARECAPITAL            | The share capital is wrong in the balance sheet                                                       |
+| MISSING_NUMBEREMPLOYEES       | Missing number of employees but required                                                              |
+| MISMATCH_PL_RS_BS             | Mismatch of profit/loss in result sheet and balance sheet                                             |
+| MISMATCH_PL_CE                | Mismatch of profit/loss in change of equity                                                           |
+| SUSPECT_YEAR_DUPLICATE        | Suspected annual report for duplicated data from last year                                            |
+| PROPOSED_DIVIDEND_ERR         | Proposed dividend contains a too high number                                                          |
+| MANAGEMENT_REPORT_ERR         | The management report contains errors                                                                 |
+| MANAGEMENT_REPORT_UNCERTAINTY | The management report mention uncertainty in the business                                             |
+| FORBIDDEN_LOAN                | The management report mention a forbidden loan                                                        |
+| CONTROL_BS                    | The management report mention a control balance sheet                                                 |
+| AUDITOR_CONTROL_BS            | Auditor mentions a control balance sheet                                                              |
+| AUDITOR_LIQUIDATION_REQUIRED  | Auditor mentions liquidation requirements                                                             |
+| AUDITOR_FORBIDDEN_LOAN        | Auditor mentions forbidden loan                                                                       |
+| AUDITOR_DISCOURGES            | Auditor discourges the balance/or/and result sheet                                                    |
+| AUDITOR_ACCOUNTING_LAG        | Auditor mentions lag in the accounting of the company                                                 |
+| AUDITOR_MISSING_EVIDENCE      | Auditor is missing documentation / evidence for transactions                                          |
+| AUDITOR_TAXES_LATE            | Auditor mentions taxes have been paid late                                                            |
+| AUDITOR_UNAUTH_VALUETRANSFER  | Auditor mentions unauthorized value transfers                                                         |
+| AUDITOR_ACCOUNTING_ISSUES     | Auditor mentions accounting issues                                                                    |
+| AUDITOR_UNCERTAINTY           | Auditor mentions uncertainty in the business                                                          |
+| AUDITOR_ACCOUNTING_ERR        | Auditor mentions errors in accounting                                                                 |
+| AUDITOR_REMARK                | Auditor report contains a remark                                                                      |
+| COMPARATIVE_FIGURES_ERR       | There is an error in compartative figures for the year                                                |
 
 Check back continuously since we are adding more subtypes.
 
