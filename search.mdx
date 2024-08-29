@@ -331,6 +331,30 @@ query_by=stock.marketExchangeName&
 key=your_api_key
 ```
 
+### Search for companies that have sold to public actors
+
+Searches for companies that have sold to Gävle municipality.
+
+```bash cURL
+curl https://api.tic.io/search/companies?
+q=gävle&
+query_by=salesToPublicActors.actorName&
+key=your_api_key
+{
+    {
+    "facet_counts": [],
+    "found": 1563,
+    "hits": [
+        {
+            "document": {
+                "id": "3427183",
+                "companyId": 3427183,
+                "iso3166CountryCode": "SE",
+                "registrationNumber": "5564228509",
+                "registrationDate": 669510000....
+}
+```
+
 ### Search for intelligence records
 
 Searches for companies that have passed auditor requirements by third consecutive year. Note that the score should exceed 254.
