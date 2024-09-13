@@ -183,6 +183,8 @@ List of intelligence.companyIntelligenceType below in the table. Please note tha
 | SuspectedAddress             | 5     | The address has earlier been known                         |
 | PresentOnWarningList         | 7     | The company is present on certain warning lists            |
 | AnnualReportDiscrepancies    | 8     | One or multiple annual reports contains discrepancies      |
+| AuditorResignation           | 9     | Auditor has resigned from their duties                     |
+| Registration                 | 10    | One or more issues about registration                      |
 
 The intelligence.externalId is used to reference an id containing the orgin of the intelligence record. If for example the
 intelligence record is of type: AnnualReportDiscrepancies (8) it means the external id represents the id of the annual report.
@@ -242,6 +244,7 @@ List of subtypes. Please note you need to filter by string when using intelligen
 | K3_REQUIRED                   | Company is using K2 ruleset but is required to use K3 ruleset                                         |
 | ISSUE_WITH_REGISTRATION       | The annual report was registered with a discrepancy indicating one or multiple issues                 |
 | F_TAX_REVOKED                 | The F-tax registration of the company have been revoked                                               |
+| AFFILIATION                   | The business is affiliated with external data                                                         |
 
 Check back continuously since we are adding more subtypes.
 
