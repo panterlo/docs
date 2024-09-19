@@ -1,0 +1,36 @@
+---
+title: 'Report overlay'
+openapi: get /financial-documents/se/{financialDocumentId}/error
+---
+
+### Details
+
+This will return the report in a XBRL format inline with the browser e.g it will
+open the browser PDF viewer (XML). To force a download you can use querystring inline=false.
+
+It will inject a script that hightlights any errors in the annual report and also display a
+table. You can acess the error object in the window object, window.model.
+
+Example
+
+```json Example of window.model object
+{
+  "intellience": [
+    {
+      "id": 1172573,
+      "subType": "MANAGEMENT_REPORT_ERR",
+      "notes": "The annual report is missing the management report.",
+      "score": 255
+    }
+  ],
+  "duplicates": [
+    {
+      "elementName": "se-gen-base:AndraLangfristigaVardepappersinnehavAnskaffningsvarden",
+      "context": "BALANS1",
+      "description": "Duplicate facts with inconsistency",
+      "errorValue": "70240",
+      "elements": [{}, {}]
+    }
+  ]
+}
+```

@@ -115,6 +115,8 @@
         "api-core/financial-documents/financial-documents-se-report-pdf",
         "api-core/financial-documents/financial-documents-se-report-xbrl",
         "api-core/financial-documents/financial-documents-se-report-ixbrl",
+        "api-core/financial-documents/financial-documents-se-report-error",
+        "api-core/financial-documents/financial-documents-se-report-metadata",
         "api-core/financial-documents/financial-documents-se-audit-pdf",
         "api-core/financial-documents/financial-documents-se-audit-xbrl",
         "api-core/financial-documents/financial-documents-se-audit-ixbrl"
@@ -226,7 +228,6 @@
         "api-industry/ica/list",
         "api-industry/ica/details",
         "api-industry/ica/notes",
-        "api-industry/ica/annual-reports",
         "api-industry/ica/catalog",
         "api-industry/icastatistics/store",
         "api-industry/icastatistics/largest",

@@ -18,43 +18,37 @@ These endpoints are for downloading and showing users financial reports or for y
 ### Response and example
 
 This endpoint with the URL segment /se is for Sweden. Each region has it's own URL. With this endpoint you get information
-about which documents exists.
+about which documents exists. The response includes an array of documents available for each report. To retrieve metadata
+about a report the URL metadata should be included in the availableFiles array.
 
 ```json Example response
 {
-    "companyName": "Clean Motion AB",
-    "registrationNumber": 5567881825,
-    "arrivalDate": "2024-06-19T00:00:00",
-    "ruleset": "K3",
-    "code": "risbs",
-    "formatDescription": "Årsredovisning med resultaträkning och balansräkning",
-    "periodStart": "2023-01-01T00:00:00",
-    "periodEnd": "2023-12-31T00:00:00",
-    "annualGeneralMeetingDate": "2024-04-24T00:00:00",
-    "lastSignatureDate": "2024-04-24T00:00:00",
-    "auditorFullName": "XXX;Auktoriserad revisor",
-    "auditCompanyName": "BDO Göteborg AB",
-    "hasReportXBRL": true,
-    "hasReportiXBRL": true,
-    "hasReportPDF": true,
-    "hasReportAuditXBRL": true,
-    "hasReportAuditiXBRL": true,
-    "hasReportAuditPDF": false,
-    "reportSoftwareMetaTag": "Wolters Kluwer Capego",
-    "reportSoftwareVersionMetaTag": "2024.6",
-    "reportApplicationName": null,
-    "reportAuditReportHashMetaTag": "4476f78f4b88d903e3168312f884d09b9362461dd01fada4aece2be48028b1d6",
-    "reportOriginatorMetaTag": null,
-    "reportAuditorMetaTag": null,
-    "auditorSoftwareMetaTag": "Hogia AuditReport",
-    "auditorSoftwareVersionMetaTag": "auditReport 2023.02",
-    "auditorApplicationName": "Hogia IxbrlService 2.215.85.0",
-    "auditorReportHashMetaTag": null,
-    "auditorOriginatorMetaTag": null,
-    "bolagsverketCaseRegistrationDate": "2024-06-19T12:12:01",
-    "bolagsverketCaseId": 9358316,
-    "bolagsverketCaseYear": 2024,
-    "bolagsverketNotificationDate": "2024-06-19T00:00:00"
-}
+  "financialDocumentId": 2,
+  "isElectronic": true,
+  "caseNumber": 9000102,
+  "caseYear": 2024,
+  "caseRegistrationDate": "2024-01-01T16:05:16",
+  "availableFiles": [
+    {
+      "fileType": "reportPDF",
+      "url": "https://api.tic.io/financial-documents/se/2/pdf"
+    },
+    {
+      "fileType": "reportXBRL",
+      "url": "https://api.tic.io/financial-documents/se/2/xbrl"
+    },
+    {
+      "fileType": "errorXHTML",
+      "url": "https://api.tic.io/financial-documents/se/2/error"
+    },
+    {
+      "fileType": "reportXHTML",
+      "url": "https://api.tic.io/financial-documents/se/2/ixbrl"
+    },
+    {
+      "fileType": "metadata",
+      "url": "https://api.tic.io/financial-documents/se/2/metadata"
+    }
+  ]
 }
 ```
