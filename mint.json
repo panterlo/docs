@@ -175,6 +175,13 @@
       ]
     },
     {
+      "group": "Media",
+      "pages": [
+        "api-core/media/trademark-se-availablemedia",
+        "api-core/media/trademark-se-mediaformat"
+      ]
+    },
+    {
       "group": "API IDP Documentation",
       "pages": ["api-idp/introduction"]
     },
