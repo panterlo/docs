@@ -79,7 +79,8 @@ limit your search result by using filter_by on ALL fields.
 | addresses.countryCodeAlpha3                              | String   | Country code 3 char alpha                                                                 |
 | documents.documentTitle                                  | String   | Title of the document                                                                     |
 | documents.documentVersion                                | String   | Version of the document                                                                   |
-| intelligence.companyIntelligenceType                     | Int32    | The specific enum (int) that you want to query by                                         |
+| documents.documentValue3                                 | String   | Used to provide additional data about the document                                        |
+| intelligence.companyIntelligenceType                     | String   | The specific enum (int) that you want to query by                                         |
 | intelligence.companyIntelligenceSubType                  | String   | A text enum describing the sub-type of the intelligence type (see documentation)          |
 | intelligence.notes                                       | String   | The description of the discrepancy                                                        |
 | intelligence.score                                       | Int32    | A score rank between 0-255 where 0 means only for information and 255 is a serious mark   |
@@ -98,7 +99,14 @@ limit your search result by using filter_by on ALL fields.
 | mostRecentFinancialSummary.km_NetProfitMargin            | Float    | Net profit margin with four decimals                                                      |
 | mostRecentFinancialSummary.km_EquityAssetsRatio          | Float    | Equity asset ratio with four decimals                                                     |
 | mostRecentFinancialSummary.km_GrossMargin                | Float    | Gross margin with four decimals                                                           |
-| mostRecentFinancialSummary.isAudited                     | bool     | True if the annual report has been audited by an auditor                                  |
+| mostRecentFinancialSummary.software                      | String   | Software used to generate the financial report (if known)                                 |
+| franchisesOrLicences.linkedToName                        | String   | From which company name is the franchise, licence or permit given                         |
+| franchisesOrLicences.actingUnderName                     | String   | Under which name is the business providing services or sales of goods                     |
+| franchisesOrLicences.linkedToCompanyId                   | Int32    | From which company id is the franchise, licence or permit given                           |
+| franchisesOrLicences.description                         | String   | Description of the franchise, licence or permit given                                     |
+| franchisesOrLicences.companyFranchiseOrLicenceType       | String   | Type of franchise, licence or permit (franchise, licence, membership, agent, other)       |
+| trademarks.word                                          | String   | The word representing a word-trademark                                                    |
+| trademarks.expire                                        | Int64    | When the trademark expire in Unix time (epoch) seconds since 1st January 1970             |
 | stock.isin                                               | String   | ISIN                                                                                      |
 | stock.ticker                                             | String   | Ticker symbol on market                                                                   |
 | stock.marketName                                         | String   | Market name                                                                               |
@@ -108,6 +116,7 @@ limit your search result by using filter_by on ALL fields.
 | stock.enterpriseValue                                    | String   | Enterprise value last closing day                                                         |
 | stock.nextReportDate                                     | String   | Next report date for the listed company                                                   |
 | stock.dividendExDate                                     | String   | Next X-date to receive the dividend                                                       |
+| stock.yahooSymbol                                        | String   | The Yahoo finance symbol                                                                  |
 | lei.leiCode                                              | String   | LEI Code                                                                                  |
 | lei.registrationStatus                                   | String   | RETIRED, DUPLICATE, LAPSED, ANNULLED, PENDING_TRANSFER, ISSUED, PENDING_ARCHIVAL          |
 | lei.initialRegistrationDate                              | Int64    | Initial registration date in Unix time (epoch) seconds since 1st January 1970             |
@@ -138,6 +147,7 @@ limit your search result by using filter_by on ALL fields.
 | hasLEI                                                   | Bool     | Helper flag for knowing if the company has LEI information present                        |
 | hasECParticipant                                         | Bool     | Helper flag for knowing if the company has EU participant information present             |
 | hasFranchisesOrLicences                                  | Bool     | Helper flag for knowing if the company has franchises or licences present                 |
+| hasTrademarks                                            | Bool     | Helper flag for knowing if the company has trademarks                                     |
 
 ## Unix time only
 
@@ -165,6 +175,10 @@ When duplication is identified by REA (Research Executive Agency), the validity 
 
 **Blocked**
 Blocked during the validation process by REA (Research Executive Agency).
+
+## Enums
+
+Enums have been stored as plain text in search making it easier to service and not having to remember their numeric values.
 
 ## Intelligence types
 
@@ -432,34 +446,89 @@ The search response for example when you search for our company would look like 
   "hits": [
     {
       "document": {
-        "id": "1893055",
+        "addresses": [
+          {
+            "addressType": "mailAddress",
+            "city": "BORLÄNGE",
+            "postalCode": "78129",
+            "street": "Box 930"
+          },
+          {
+            "addressType": "mailAddress",
+            "city": "Stockholm",
+            "countryCodeAlpha3": "SWE",
+            "houseNumber": "41",
+            "location": [59.33876, 18.06013],
+            "postalCode": "11134",
+            "street": "Sveavägen"
+          }
+        ],
+        "bankAccounts": [
+          {
+            "accountNumber": "1746635",
+            "bankAccountType": "bankgiro"
+          },
+          {
+            "accountNumber": "51365088",
+            "bankAccountType": "bankgiro"
+          },
+          {
+            "accountNumber": "56117526",
+            "bankAccountType": "bankgiro"
+          },
+          {
+            "accountNumber": "59219212",
+            "bankAccountType": "bankgiro"
+          },
+          {
+            "accountNumber": "7859291",
+            "bankAccountType": "bankgiro"
+          }
+        ],
         "companyId": 1893055,
-        "iso3166CountryCode": "SE",
-        "registrationNumber": "5565199493",
-        "legalEntityType": "Aktiebolag",
-        "registrationDate": 805680000,
-        "mostRecentPurpose": "Aktiebolaget ska bedriva försäljning av mjukvaror, hårdvaror samt tjänster inom datakommunikation, produktion och försäljning av mediaprodukter och mediatjänster samt därmed förenlig verksamhet.",
-        "names": [
+        "documents": [
           {
-            "nameOrIdentifier": "Bahnhof AB (publ)",
-            "companyNamingType": "legalName",
-            "firstSeenAt": 1700506032
+            "companyDocumentId": 10801798,
+            "companyDocumentType": "annualReport",
+            "documentDate": 1719360000,
+            "documentTitle": "Annual report submitted by mail on 2024-06-26 for 2023-01-01 to 2023-12-31 and registered on 2024-08-08",
+            "documentUrl": "https://api.tic.io/financial-documents/se/520470",
+            "documentValue1": "2023-01-01",
+            "documentValue2": "2023-12-31",
+            "documentVersion": "9392305/2024"
+          },
+          {
+            "companyDocumentId": 8894712,
+            "companyDocumentType": "case",
+            "documentDate": 1715817600,
+            "documentTitle": "Authorisation to increase share capital through the issue of new shares",
+            "documentVersion": "267251/2024"
+          },
+          {
+            "companyDocumentId": 8894711,
+            "companyDocumentType": "case",
+            "documentDate": 1715644800,
+            "documentTitle": "Change of representative/signatory power",
+            "documentVersion": "263117/2024"
           }
         ],
-        "phoneNumbers": [
-          {
-            "e164PhoneNumber": "+46105100000",
-            "phoneNumberType": "fixedLine",
-            "numberPlanServiceType": "Geografiskt oberoende tjänster",
-            "orginalOperator": "Bahnhof AB",
-            "priorOperator": null,
-            "currentOperator": "Bahnhof AB",
-            "lastPortingDate": null
-          }
-        ],
-        "hasPhoneNumbers": true,
         "emailAddresses": [],
+        "franchisesOrLicences": [],
+        "hasAddresses": true,
+        "hasBankAccounts": true,
+        "hasDocuments": true,
+        "hasECParticipant": false,
         "hasEmailAddresses": false,
+        "hasFranchisesOrLicences": false,
+        "hasHyperlinks": true,
+        "hasIntelligence": false,
+        "hasLEI": true,
+        "hasMostRecentFinancialSummary": true,
+        "hasPhoneNumbers": true,
+        "hasSalesToPublicActors": true,
+        "hasStatus": false,
+        "hasStock": true,
+        "hasTrademarks": true,
         "hyperlinks": [
           {
             "hyperlink": "https://bahnhof.se/",
@@ -470,7 +539,124 @@ The search response for example when you search for our company would look like 
             "hyperlinkType": "linkedIn"
           }
         ],
-        "hasHyperlinks": true,
+        "id": "1893055",
+        "intelligence": [],
+        "isRegisteredForFTax": true,
+        "isRegisteredForPayroll": true,
+        "isRegisteredForVAT": true,
+        "iso3166CountryCode": "SE",
+        "legalEntityType": "Aktiebolag",
+        "lei": {
+          "initialRegistrationDate": 1477533600,
+          "leiCode": "213800K7LQU3H85KCU96",
+          "managingLOU": "549300O897ZC5H7CY412",
+          "managingLOULegalName": "Nordic Legal Entity Identifier AB",
+          "nextRenewalDate": 1745795880,
+          "registrationStatus": "ISSUED"
+        },
+        "mostRecentFinancialSummary": {
+          "bs_TotalAssetsK": 1101530,
+          "fn_NumberOfEmployees": 290.0,
+          "isAudited": true,
+          "km_EquityAssetsRatio": 0.4946,
+          "km_GrossMargin": 0.2893,
+          "km_NetProfitMargin": 0.1264,
+          "km_OperatingMargin": 0.1254,
+          "periodEnd": 1672444800,
+          "periodStart": 1640995200,
+          "rs_NetSalesK": 1730020,
+          "rs_OperatingProfitOrLossK": 216943,
+          "rs_OtherOperatingIncomeK": 691,
+          "rs_ProfitAfterFinancialItemsK": 218657,
+          "rs_SumFinancialItemsK": 1714
+        },
+        "mostRecentPurpose": "Aktiebolaget ska bedriva försäljning av mjukvaror, hårdvaror samt tjänster inom datakommunikation, produktion och försäljning av mediaprodukter och mediatjänster samt därmed förenlig verksamhet.",
+        "names": [
+          {
+            "companyNamingType": "legalName",
+            "firstSeenAt": 1700506032,
+            "nameOrIdentifier": "Bahnhof AB (publ)"
+          }
+        ],
+        "phoneNumbers": [
+          {
+            "currentOperator": "Bahnhof AB",
+            "e164PhoneNumber": "+46105100000",
+            "numberPlanServiceType": "Geografiskt oberoende tjänster",
+            "orginalOperator": "Bahnhof AB",
+            "phoneNumberType": "fixedLine"
+          }
+        ],
+        "registrationDate": 805680000,
+        "registrationNumber": "5565199493",
+        "salesToPublicActors": [
+          {
+            "actorCode": "1984",
+            "actorName": "Arboga",
+            "actorType": "Municipality",
+            "invoicedApprox2022K": 20,
+            "invoicedApprox2023K": 16
+          },
+          {
+            "actorCode": "2084",
+            "actorName": "Avesta",
+            "actorType": "Municipality",
+            "invoicedApprox2022K": 226,
+            "invoicedApprox2023K": 169
+          },
+          {
+            "actorCode": "2326",
+            "actorName": "Berg",
+            "actorType": "Municipality",
+            "invoicedApprox2022K": 14,
+            "invoicedApprox2023K": 12
+          },
+          {
+            "actorCode": "2582",
+            "actorName": "Boden",
+            "actorType": "Municipality",
+            "invoicedApprox2022K": 0,
+            "invoicedApprox2023K": 20
+          },
+          {
+            "actorCode": "0885",
+            "actorName": "Borgholm",
+            "actorType": "Municipality",
+            "invoicedApprox2022K": 47,
+            "invoicedApprox2023K": 65
+          },
+          {
+            "actorCode": "2081",
+            "actorName": "Borlänge",
+            "actorType": "Municipality",
+            "invoicedApprox2022K": 343,
+            "invoicedApprox2023K": 278
+          },
+          {
+            "actorName": "Kungliga biblioteket",
+            "actorType": "Authority",
+            "invoicedApprox2022K": 23,
+            "invoicedApprox2023K": 0
+          },
+          {
+            "actorName": "Statens konstråd",
+            "actorType": "Authority",
+            "invoicedApprox2022K": 35,
+            "invoicedApprox2023K": 34
+          },
+          {
+            "actorName": "Institutet för rymdfysik",
+            "actorType": "Authority",
+            "invoicedApprox2022K": 0,
+            "invoicedApprox2023K": 18
+          },
+          {
+            "actorName": "Trafikverket",
+            "actorType": "Authority",
+            "invoicedApprox2022K": 0,
+            "invoicedApprox2023K": 8
+          }
+        ],
         "sniCodes": [
           {
             "sni_2007Code": "61100",
@@ -485,254 +671,292 @@ The search response for example when you search for our company would look like 
             "sni_2007Name": "Redovisning och bokföring"
           }
         ],
-        "intelligence": [],
-        "hasIntelligence": false,
         "status": [],
-        "hasStatus": false,
-        "mostRecentFinancialSummary": {
-          "periodStart": 1640995200,
-          "periodEnd": 1672444800,
-          "rs_NetSalesK": 1730020,
-          "rs_OtherOperatingIncomeK": 691,
-          "rs_OperatingProfitOrLossK": 216943,
-          "rs_SumFinancialItemsK": 1714,
-          "rs_ProfitAfterFinancialItemsK": 218657,
-          "bs_TotalAssetsK": 1101530,
-          "fn_NumberOfEmployees": 290.0,
-          "km_OperatingMargin": 0.1254,
-          "km_NetProfitMargin": 0.1264,
-          "km_EquityAssetsRatio": 0.4946,
-          "km_GrossMargin": 0.2893,
-          "isAudited": true
-        },
-        "hasMostRecentFinancialSummary": true,
-        "isRegisteredForVAT": true,
-        "isRegisteredForFTax": true,
-        "isRegisteredForPayroll": true,
-        "ftaxTerminationReason": null,
-        "bankAccounts": [
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "1746635",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "51365088",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "56117526",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "59219212",
-            "swift_BIC": null
-          },
-          {
-            "bankAccountType": "bankgiro",
-            "accountNumber": "7859291",
-            "swift_BIC": null
-          }
-        ],
-        "hasBankAccounts": true,
-        "addresses": [
-          {
-            "addressType": "mailAddress",
-            "co": null,
-            "street": "Box 930",
-            "houseNumber": null,
-            "postalCode": "78129",
-            "city": "BORLÄNGE",
-            "countryCodeAlpha3": null,
-            "location": null
-          },
-          {
-            "addressType": "mailAddress",
-            "co": null,
-            "street": "Sveavägen",
-            "houseNumber": "41",
-            "postalCode": "11134",
-            "city": "Stockholm",
-            "countryCodeAlpha3": "SWE",
-            "location": [59.33876, 18.06013]
-          }
-        ],
-        "hasAddresses": true,
-        "documents": [
-          {
-            "companyDocumentId": 8894712,
-            "companyDocumentType": null,
-            "documentDate": 1715817600,
-            "documentTitle": "Bemyndigande om ökning av aktiekapitalet genom nyemission",
-            "documentVersion": "2024/267251",
-            "documentValue1": null,
-            "documentValue2": "NEW",
-            "documentValue3": null,
-            "data": {
-              "Status": "NEW"
-            }
-          },
-          {
-            "companyDocumentId": 8894711,
-            "companyDocumentType": null,
-            "documentDate": 1715644800,
-            "documentTitle": "Ändring av företrädare/firmateckning",
-            "documentVersion": "2024/263117",
-            "documentValue1": null,
-            "documentValue2": "NEW",
-            "documentValue3": null,
-            "data": {
-              "Status": "NEW"
-            }
-          }
-        ],
-        "hasDocuments": true,
         "stock": {
-          "isin": "SE0010442418",
-          "ticker": "BAHN B",
-          "yahooSymbol": "BAHN-B.ST",
-          "marketName": "First North",
-          "marketExchangeName": "OMX Stockholm",
-          "marketCountryCodeAlpha3": "SWE",
-          "sectorName": "Telekommunikation",
           "branchName": "Bredband & Telefoni",
-          "listingDate": 1198022400,
-          "enterpriseValue": 5131.72,
-          "enterpriseValueUpdated": 1724909466,
-          "stockQuote": 51.7,
-          "stockQuoteUpdated": 1724945410,
-          "nextReportDate": 1731369600,
-          "nextReportType": "INTERIM",
+          "dividendAmount": 2.0,
+          "dividendCurrency": "SEK",
           "dividendExDate": 1715731200,
           "dividendsPerYear": 1,
-          "dividendAmount": 2.0,
-          "dividendCurrency": "SEK"
+          "enterpriseValue": 5228.53,
+          "enterpriseValueUpdated": 1728106262,
+          "isin": "SE0010442418",
+          "listingDate": 1198022400,
+          "marketCountryCodeAlpha3": "SWE",
+          "marketExchangeName": "OMX Stockholm",
+          "marketName": "First North",
+          "nextReportDate": 1731369600,
+          "nextReportType": "INTERIM",
+          "sectorName": "Telekommunikation",
+          "stockQuote": 52.6,
+          "stockQuoteUpdated": 1728106214,
+          "ticker": "BAHN B",
+          "yahooSymbol": "BAHN-B.ST"
         },
-        "hasStock": true,
-        "lei": {
-          "leiCode": "213800K7LQU3H85KCU96",
-          "registrationStatus": "ISSUED",
-          "initialRegistrationDate": 1477533600,
-          "nextRenewalDate": 1745795880,
-          "managingLOU": "549300O897ZC5H7CY412",
-          "managingLOULegalName": "Nordic Legal Entity Identifier AB"
-        },
-        "hasLEI": true,
-        "salesToPublicActors": [
+        "trademarks": [
           {
-            "actorName": "Arboga",
-            "actorType": "Municipality",
-            "actorCode": "1984",
-            "invoicedApprox2022K": 20,
-            "invoicedApprox2023K": 16
+            "applicationNumber": "2007-05003",
+            "feature": "Figurative",
+            "mediaUrl": "https://api.tic.io/media/trademarks/se/415329",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 415329,
+            "word": "B BAHNHOF"
           },
           {
-            "actorName": "Avesta",
-            "actorType": "Municipality",
-            "actorCode": "2084",
-            "invoicedApprox2022K": 226,
-            "invoicedApprox2023K": 169
+            "applicationNumber": "2009-06701",
+            "expire": 1574812800,
+            "feature": "Word",
+            "registered": 1259280000,
+            "registeredCountryCode": "SE",
+            "status": "Expired",
+            "trademarkId": 447292,
+            "word": "Comptainer"
           },
           {
-            "actorName": "Kustbostäder i Oxelösund Aktiebolag",
-            "actorType": "MunicipalityCompany",
-            "actorCode": null,
-            "invoicedApprox2022K": 21,
-            "invoicedApprox2023K": 26
+            "applicationNumber": "2009-06702",
+            "expire": 1574812800,
+            "feature": "Word",
+            "registered": 1259280000,
+            "registeredCountryCode": "SE",
+            "status": "Expired",
+            "trademarkId": 447293,
+            "word": "Servtainer"
           },
           {
-            "actorName": "Burlövs Bostäder AB",
-            "actorType": "MunicipalityCompany",
-            "actorCode": null,
-            "invoicedApprox2022K": 22,
-            "invoicedApprox2023K": 26
+            "applicationNumber": "2012-04739",
+            "expire": 1982361600,
+            "feature": "Word",
+            "registered": 1351209600,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 482096,
+            "word": "Thule Data Center"
           },
           {
-            "actorName": "Västra Götalandsregionen",
-            "actorType": "Region",
-            "actorCode": null,
-            "invoicedApprox2022K": 52,
-            "invoicedApprox2023K": 40
+            "applicationNumber": "2013-00692",
+            "expire": 1996876800,
+            "feature": "Word",
+            "registered": 1365724800,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 488573,
+            "word": "IKAPP Finans"
           },
           {
-            "actorName": "Sveriges lantbruksuniversitet",
-            "actorType": "University",
-            "actorCode": null,
-            "invoicedApprox2022K": 0,
-            "invoicedApprox2023K": 448
+            "applicationNumber": "2013-00975",
+            "expire": 1997481600,
+            "feature": "Word",
+            "registered": 1366329600,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 489078,
+            "word": "OpenGiga"
           },
           {
-            "actorName": "Kungliga biblioteket",
-            "actorType": "Authority",
-            "actorCode": null,
-            "invoicedApprox2022K": 23,
-            "invoicedApprox2023K": 0
+            "applicationNumber": "2013-02106",
+            "expire": 2001110400,
+            "feature": "Word",
+            "registered": 1369958400,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 490365,
+            "word": "DCDH - Data Center for District Heating"
           },
           {
-            "actorName": "Statens konstråd",
-            "actorType": "Authority",
-            "actorCode": null,
-            "invoicedApprox2022K": 35,
-            "invoicedApprox2023K": 34
+            "applicationNumber": "2013-04191",
+            "expire": 1697587200,
+            "feature": "Word",
+            "registered": 1382054400,
+            "registeredCountryCode": "SE",
+            "status": "Expired",
+            "trademarkId": 492972,
+            "word": "NoLeaks"
           },
           {
-            "actorName": "Institutet för rymdfysik",
-            "actorType": "Authority",
-            "actorCode": null,
-            "invoicedApprox2022K": 0,
-            "invoicedApprox2023K": 18
+            "applicationNumber": "2013-05251",
+            "expire": 2027116800,
+            "feature": "Word",
+            "registered": 1395964800,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 494265,
+            "word": "Based in Sweden"
           },
           {
-            "actorName": "Trafikverket",
-            "actorType": "Authority",
-            "actorCode": null,
-            "invoicedApprox2022K": 0,
-            "invoicedApprox2023K": 8
+            "applicationNumber": "2014-03224",
+            "feature": "Word",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 502301,
+            "word": "Kraftwerk"
+          },
+          {
+            "applicationNumber": "2014-08132",
+            "expire": 1749081600,
+            "feature": "Word",
+            "registered": 1433462400,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 508011,
+            "word": "Triple Green"
+          },
+          {
+            "applicationNumber": "2016-05296",
+            "expire": 1793664000,
+            "feature": "Word",
+            "registered": 1478131200,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 525052,
+            "word": "Northern Light"
+          },
+          {
+            "applicationNumber": "2016-05808",
+            "expire": 1795392000,
+            "feature": "Word",
+            "registered": 1479859200,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 525563,
+            "word": "Spridningskollen"
+          },
+          {
+            "applicationNumber": "2017-05526",
+            "expire": 1827014400,
+            "feature": "Word",
+            "registered": 1511481600,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 536066,
+            "word": "Climate+"
+          },
+          {
+            "applicationNumber": "2017-07191",
+            "feature": "Word",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 537998,
+            "word": "Big City"
+          },
+          {
+            "applicationNumber": "2017-08630",
+            "expire": 1836777600,
+            "feature": "Word",
+            "registered": 1521158400,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 539770,
+            "word": "VXDC"
+          },
+          {
+            "applicationNumber": "2018-02465",
+            "feature": "Word",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 543262,
+            "word": "Streama lagligt"
+          },
+          {
+            "applicationNumber": "2018-02507",
+            "feature": "Word",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 543304,
+            "word": "Öppet Spektrum"
+          },
+          {
+            "applicationNumber": "2019-06976",
+            "feature": "Word",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 558152,
+            "word": "Quantum Cloud"
+          },
+          {
+            "applicationNumber": "2020-01310",
+            "expire": 1898121600,
+            "feature": "Word",
+            "registered": 1599609600,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 561236,
+            "word": "Bahnhof"
+          },
+          {
+            "applicationNumber": "2020-03102",
+            "expire": 1904342400,
+            "feature": "Figurative",
+            "mediaUrl": "https://api.tic.io/media/trademarks/se/563313",
+            "registered": 1591056000,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 563313,
+            "word": "B BAHNHOF INTERNET MED SEKRETESS"
+          },
+          {
+            "applicationNumber": "2020-03106",
+            "expire": 1904342400,
+            "feature": "Word",
+            "registered": 1590537600,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 563317,
+            "word": "Elementica Data Center Construction"
+          },
+          {
+            "applicationNumber": "2020-03596",
+            "expire": 1906070400,
+            "feature": "Word",
+            "registered": 1592438400,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 563926,
+            "word": "GothCom"
+          },
+          {
+            "applicationNumber": "2021-04259",
+            "feature": "Word",
+            "registeredCountryCode": "SE",
+            "status": "Applicationrefused",
+            "trademarkId": 574763,
+            "word": "FOLIE"
+          },
+          {
+            "applicationNumber": "2021-06328",
+            "expire": 1947196800,
+            "feature": "Word",
+            "registered": 1634860800,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 577183,
+            "word": "Foliehatt"
+          },
+          {
+            "applicationNumber": "2022-01324",
+            "expire": 1962316800,
+            "feature": "Word",
+            "registered": 1648425600,
+            "registeredCountryCode": "SE",
+            "status": "Registered",
+            "trademarkId": 581448,
+            "word": "Nord Stream 3"
           }
-        ],
-        "hasSalesToPublicActors": true,
-        "ecParticipant": null,
-        "hasECParticipant": false,
-        "franchisesOrLicences": [],
-        "hasFranchisesOrLicences": false
+        ]
       },
-      "highlight": {
-        "registrationNumber": {
-          "matched_tokens": ["5565199493"],
-          "snippet": "<mark>5565199493</mark>"
-        }
-      },
-      "highlights": [
-        {
-          "field": "registrationNumber",
-          "matched_tokens": ["5565199493"],
-          "snippet": "<mark>5565199493</mark>"
-        }
-      ],
-      "text_match": 578730123365711993.0,
-      "text_match_info": {
-        "best_field_score": "1108091339008",
-        "best_field_weight": 15,
-        "fields_matched": 1,
-        "num_tokens_dropped": 0,
-        "score": "578730123365711993",
-        "tokens_matched": 1,
-        "typo_prefix_score": 0
-      }
+      "highlight": {},
+      "highlights": []
     }
   ],
-  "out_of": 912878,
+  "out_of": 955980,
   "page": 1,
   "request_params": {
-    "collection_name": "companies_20240829",
-    "first_q": "5565199493",
+    "collection_name": "companies_20241005",
+    "first_q": "*",
     "per_page": 10,
-    "q": "5565199493"
+    "q": "*"
   },
   "search_cutoff": false,
-  "search_time_ms": 0
+  "search_time_ms": 13
 }
 ```
